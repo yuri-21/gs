@@ -8,6 +8,13 @@ include 'includes/header.php';
   <p style="font-size: 18px; line-height: 1.5; color: #3e2f2f;">
     Натуральные сливочные ириски. Состав: сахар, сливки, глюкозный сироп, сливочное масло, соль гималайская. Срок хранения 30 суток при +2...+6 °C.
   </p>
+
+<form action="cart_add.php" method="post">
+  <input type="hidden" name="product_name" value="Конфеты Птимилк">
+  <input type="hidden" name="qty" value="1">
+  <button type="submit" style="background:#b76e79;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">Добавить в корзину</button>
+</form>
+
   <a href="/" style="display:inline-block; margin-top:30px; font-weight:bold; color:#b76e79; text-decoration:none;">← Вернуться на главную</a>
 </div>
 <?php

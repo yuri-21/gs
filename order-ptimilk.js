@@ -1,188 +1,185 @@
-// order-ptimilk.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    const prices = {3: 350, 9: 790, 16: 1350};
+  const prices = {3: 350, 9: 790, 16: 1350};
+  const container = document.querySelector('.boxes-area');
+  const btnAdd = document.getElementById('add-box-btn');
+  const totalSpan = document.getElementById('total-price');
+  const btnOrder = document.getElementById('order-submit');
 
-    const container = document.getElementById('ptimilk-order-list');
-    const addBoxBtn = document.getElementById('add-box-btn');
-    const totalPriceElem = document.getElementById('total-price');
-    const submitOrderBtn = document.getElementById('submit-order');
+  let boxCount = 0;
+  let totalSum = 0;
 
-    function updateBoxPrice(box) {
-        const sizeSelect = box.querySelector('.box-size-select');
-        const flavorQtyInputs = box.querySelectorAll('.flavor-qty-input');
-        const boxCountInput = box.querySelector('.box-count-input');
-        const priceElem = box.querySelector('.price-value');
+  // Функция подсчёта стоимости
+  function updateSummary() {
+    let total = 0;
+    document.querySelectorAll('.box-group').forEach(box => {
+      const price = parseInt(box.querySelector('.price-display').dataset.price);
+      total += price;
+    });
+    totalSpan.textContent = total.toLocaleString('ru-RU');
+  }
 
-        const boxSize = Number(sizeSelect.value);
-        let flavorSum = 0;
-        flavorQtyInputs.forEach(input => {
-            const val = Number(input.value);
-            if (!isNaN(val)) flavorSum += val;
-        });
+  function createBox() {
+    boxCount++;
+    const box = document.createElement('div');
+    box.className = 'box-group';
+    box.dataset.index = boxCount;
 
-        // Автовалидация сумм вкусов с размером коробки
-        if (flavorSum > boxSize) {
-            flavorQtyInputs.forEach((input, idx) => {
-                if (idx > 0) input.value = 0; // простой приоритет: оставляем 1-й, остальные обнуляем
-            });
-            flavorSum = Number(flavorQtyInputs[0].value);
-        }
+    // HTML блока
+    box.innerHTML = `
+      <button type="button" class="btn-delete">Удалить</button>
+      <div class="box-inner">
+        <div>
+          <img src="ptimilk3.jpg" class="box-image" data-type="3" title="3 конфеты" />
+        </div>
+        <div class="flavors">
+          <div class="flavor" data-flavor="cocoa">
+            <img src="cocoa.jpg" alt="Какао" />
+            <div class="qty-control">
+              <button type="button" class="qty-minus">−</button>
+              <input type="number" min="0" max="16" value="0" class="flavor-qty" />
+              <button type="button" class="qty-plus">+</button>
+            </div>
+          </div>
+          <!-- повтор для клубники, кокоса, фисташки -->
+          <div class="flavor" data-flavor="strawberry">
+            <img src="strawberry.jpg" alt="Клубника" />
+            <div class="qty-control">
+              <button type="button" class="qty-minus">−</button>
+              <input type="number" min="0" max="16" value="0" class="flavor-qty" />
+              <button type="button" class="qty-plus">+</button>
+            </div>
+          </div>
+          <div class="flavor" data-flavor="coconut">
+            <img src="coconut.jpg" alt="Кокос" />
+            <div class="qty-control">
+              <button type="button" class="qty-minus">−</button>
+              <input type="number" min="0" max="16" value="0" class="flavor-qty" />
+              <button type="button" class="qty-plus">+</button>
+            </div>
+          </div>
+          <div class="flavor" data-flavor="pistachio">
+            <img src="pistachio.jpg" alt="Фисташка" />
+            <div class="qty-control">
+              <button type="button" class="qty-minus">−</button>
+              <input type="number" min="0" max="16" value="0" class="flavor-qty" />
+              <button type="button" class="qty-plus">+</button>
+            </div>
+          </div>
+        </div>
+        <label>
+          Кол-во коробок:
+          <input type="number" min="1" value="1" class="box-count" />
+        </label>
+        <div class="price-display" data-price="0">0 ₽</div>
+      </div>
+    `;
 
-        // Если суммы вкусов меньше размера - корректируем самый первый вкус
-        if (flavorSum < boxSize) {
-            const diff = boxSize - flavorSum;
-            flavorQtyInputs[0].value = Number(flavorQtyInputs[0].value) + diff;
-            flavorSum = boxSize;
-        }
+    // обработка кнопок удаления
+    const btnDel = box.querySelector('.btn-delete');
+    btnDel.onclick = () => {
+      box.remove();
+      recalcTotal();
+    };
 
-        // Обновляем максимум для input-ов (чтобы не вводили лишнего)
-        flavorQtyInputs.forEach(input => {
-            const maxAllowed = boxSize - (flavorSum - Number(input.value));
-            input.max = maxAllowed;
-        });
-
-        const boxCount = Number(boxCountInput.value);
-        if (isNaN(boxCount) || boxCount < 1) boxCountInput.value = 1;
-
-        const boxPrice = prices[boxSize] || 0;
-        priceElem.textContent = boxCount * boxPrice;
-
-        updateTotalPrice();
-        validateForm();
-    }
-
-    function updateTotalPrice() {
-        let total = 0;
-        const boxes = container.querySelectorAll('.ptimilk-box');
-        boxes.forEach(box => {
-            const priceText = box.querySelector('.price-value').textContent.replace(/\s/g, '');
-            const price = Number(priceText);
-            if (!isNaN(price)) total += price;
-        });
-        totalPriceElem.textContent = total.toLocaleString('ru-RU');
-    }
-
-    function validateForm() {
-        let valid = true;
-        const boxes = container.querySelectorAll('.ptimilk-box');
-        boxes.forEach(box => {
-            const sizeSelect = box.querySelector('.box-size-select');
-            const boxSize = Number(sizeSelect.value);
-            let flavorSum = 0;
-            const flavorQtyInputs = box.querySelectorAll('.flavor-qty-input');
-            flavorQtyInputs.forEach(input => {
-                flavorSum += Number(input.value);
-            });
-            if (flavorSum !== boxSize) valid = false;
-        });
-        submitOrderBtn.disabled = !valid || container.children.length === 0;
-    }
-
-    function addBox(index = null) {
-        if (index === null) index = container.children.length;
-
-        const firstBox = container.querySelector('.ptimilk-box');
-        const clone = firstBox.cloneNode(true);
-        clone.dataset.boxIndex = index;
-
-        const sizeSelect = clone.querySelector('.box-size-select');
-        sizeSelect.value = "9";
-
-        const defaults = {
-            3: [1,1,1,0],
-            9: [3,2,2,2],
-            16: [4,4,4,4]
-        };
-
-        const flavorQtyInputs = clone.querySelectorAll('.flavor-qty-input');
-        flavorQtyInputs.forEach((input, idx) => {
-            input.value = defaults[9][idx]; 
-        });
-
-        clone.querySelector('.box-count-input').value = 1;
-        clone.querySelector('.price-value').textContent = prices[9];
-        clone.querySelector('.remove-box-btn').style.display = 'block';
-
-        container.appendChild(clone);
-        attachBoxEvents(clone);
-        updateBoxPrice(clone);
-    }
-
-    function attachBoxEvents(box) {
-        const sizeSelect = box.querySelector('.box-size-select');
-        const flavorQtyInputs = box.querySelectorAll('.flavor-qty-input');
-        const boxCountInput = box.querySelector('.box-count-input');
-        const removeBtn = box.querySelector('.remove-box-btn');
-
-        sizeSelect.addEventListener('change', () => {
-            const size = Number(sizeSelect.value);
-            const defaults = {
-                3: [1,1,1,0],
-                9: [3,2,2,2],
-                16: [4,4,4,4]
-            };
-            flavorQtyInputs.forEach((input, idx) => {
-                input.value = defaults[size][idx] || 0;
-                input.max = defaults[size].reduce((a,b) => a+b, 0);
-            });
-            updateBoxPrice(box);
-        });
-
-        flavorQtyInputs.forEach(input => {
-            input.addEventListener('input', () => {
-                let val = parseInt(input.value, 10);
-                if (isNaN(val) || val < 0) val = 0;
-                if (val > 99) val = 99;
-                input.value = val;
-                updateBoxPrice(box);
-            });
-        });
-
-        boxCountInput.addEventListener('input', () => {
-            let val = parseInt(boxCountInput.value, 10);
-            if (isNaN(val) || val < 1) val = 1;
-            if (val > 99) val = 99;
-            boxCountInput.value = val;
-            updateBoxPrice(box);
-        });
-
-        removeBtn.addEventListener('click', () => {
-            box.remove();
-            updateTotalPrice();
-            validateForm();
-        });
-    }
-
-    const firstBox = container.querySelector('.ptimilk-box');
-    attachBoxEvents(firstBox);
-    updateBoxPrice(firstBox);
-
-    addBoxBtn.addEventListener('click', () => {
-        addBox();
+    // обработка +/- в вкусах
+    box.querySelectorAll('.qty-minus').forEach(b => {
+      b.onclick = () => changeFlavorQty(b, -1);
+    });
+    box.querySelectorAll('.qty-plus').forEach(b => {
+      b.onclick = () => changeFlavorQty(b, 1);
     });
 
-    submitOrderBtn.addEventListener('click', () => {
-        if (submitOrderBtn.disabled) return;
-
-        const boxes = [];
-        container.querySelectorAll('.ptimilk-box').forEach(box => {
-            const size = box.querySelector('.box-size-select').value;
-            const count = box.querySelector('.box-count-input').value;
-            const flavors = {};
-            box.querySelectorAll('.flavor-qty-input').forEach(input => {
-                const flavor = input.closest('.flavor-inline').dataset.flavorId;
-                flavors[flavor] = parseInt(input.value, 10) || 0;
-            });
-            boxes.push({size: parseInt(size,10), count: parseInt(count,10), flavors: flavors});
-        });
-
-        console.log('Отправляем заказ:', boxes);
-        alert('Заказ принят! Подробности в консоли.');
-
-        // Здесь добавить отправку на сервер
+    // обработка ввода в вкусах
+    box.querySelectorAll('.flavor-qty').forEach(input => {
+      input.oninput = () => {
+        const val = parseInt(input.value) || 0;
+        input.value = Math.max(0, Math.min(val, 16));
+        recomputeBoxPrice(box);
+      };
     });
 
-    updateTotalPrice();
-    validateForm();
+    // обработка количества коробки
+    box.querySelector('.box-number').oninput = () => {
+      recomputeBoxPrice(box);
+    };
+
+    // обработка смены картинки коробки
+    box.querySelector('.box-image').onclick = () => {
+      // вызываем выпадающий список или меняем картинку
+    };
+
+    // выводим в контейнер
+    document.querySelector('.boxes-area').appendChild(box);
+    recalcBoxPrice(box);
+    recalcTotal();
+  }
+
+  function changeFlavorQty(btn, delta) {
+    const input = btn.closest('.qty-control').querySelector('.flavor-qty');
+    let val = parseInt(input.value) || 0;
+    val += delta;
+    val = Math.max(0, Math.min(val, 16));
+    input.value = val;
+    // пересчитываем цену
+    recalcBoxPrice(btn.closest('.box-group'));
+  }
+
+  function recomputeBoxPrice(box) {
+    const size = Number(box.querySelector('.box-size-select').value);
+    let sumFlavors = 0;
+    box.querySelectorAll('.flavor').forEach(f => {
+      const val = parseInt(f.querySelector('.flavor-qty').value) || 0;
+      sumFlavors += val;
+    });
+    // исправляем если сумма больше размера
+    if (sumFlavors > size) {
+      // уменьшаем самые последние вкусы
+      let excess = sumFlavors - size;
+      const flavors = Array.from(box.querySelectorAll('.flavor')).reverse();
+      for (let f of flavors) {
+        let val = parseInt(f.querySelector('.flavor-qty').value) || 0;
+        const reduceBy = Math.min(val, excess);
+        val -= reduceBy;
+        excess -= reduceBy;
+        f.querySelector('.flavor-qty').value = val;
+        if (excess <= 0) break;
+      }
+    } else if (sumFlavors < size) {
+      // увеличиваем первый вкус
+      const firstFlavor = box.querySelector('.flavor');
+      const val = parseInt(firstFlavor.querySelector('.flavor-qty').value) || 0;
+      firstFlavor.querySelector('.flavor-qty').value = val + (size - sumFlavors);
+    }
+    // пересчет цены
+    const boxCount = parseInt(box.querySelector('.box-number').value) || 1;
+    const price = boxCount * prices[size];
+    box.querySelector('.price-display').textContent = price.toLocaleString('ru-RU') + ' ₽';
+    box.querySelector('.price-display').dataset.price = price;
+    recalcTotal();
+  }
+
+  function recalcTotal() {
+    let total = 0;
+    document.querySelectorAll('.box-group').forEach(b => {
+      total += parseInt(b.querySelector('.price-display').dataset.price);
+    });
+    document.getElementById('total-price').textContent = total.toLocaleString('ru-RU');
+    // проверка кнопки
+    document.getElementById('order-submit').disabled = total === 0;
+  }
+
+  document.querySelectorAll('.box-image').forEach(img => {
+    img.onclick = () => {
+      // меняем картинку на список коробок, или вызываем список
+    };
+  });
+
+  document.getElementById('add-box-btn').onclick = () => createBox();
+
+  // инициализация
+  createBox();
+
+  document.getElementById('order-ptimilk').onclick = () => {
+    // собрать все данные и отправить
+  };
 });

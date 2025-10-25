@@ -62,7 +62,7 @@
 .flavor-qty-input {
     width: 40px;
     padding: 4px;
-    border: 1px solid #b76e79;
+    border: 0px/* 1px solid #b76e79 */;
     border-radius: 5px;
     font-weight: bold;
     font-size: 16px;

@@ -11,8 +11,7 @@
     <header>
         <h1><a href="/">Gulnaz Sweets</a></h1>
         <nav class="main-nav">
-            <a href="/">Продукты</a>
-            <a href="/about">О нас</a>
+            <a href="/about">Обо мне</a>
             <a href="/cart">Корзина</a>
         </nav>
     </header>

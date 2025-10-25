@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="order-iriska.css">
 <div class="order-block order-iriska">
     <h3>Оформить заказ</h3>
 
@@ -13,3 +14,4 @@
         </button>
     </div>
 </div>
+<script src="order-iriska.js"></script>

@@ -397,3 +397,64 @@ footer a:hover {
         font-size: 15px;
     }
 }
+
+
+/* ========== БЛОК ЗАКАЗА ========== */
+.order-block {
+    background: #fff5f7;
+    border: 2px solid #b76e79;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.order-block h3 {
+    font-size: 24px;
+    color: #b76e79;
+    margin-bottom: 10px;
+}
+
+.order-block p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.order-btn {
+    background: #b76e79;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.order-btn:hover {
+    background: #8b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
+}
+
+.order-btn:active {
+    transform: translateY(0);
+}
+
+/* Адаптив для блока заказа */
+@media (max-width: 768px) {
+    .order-block {
+        padding: 20px;
+    }
+
+    .order-block h3 {
+        font-size: 20px;
+    }
+
+    .order-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+}

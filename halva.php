@@ -7,6 +7,7 @@
             <div class="product-info">
                 <h2>Халва натуральная</h2>
                 <p>Настоящая халва из качественных продуктов.</p>
+				<?php include 'order.php'; ?>
                 <a href="/" class="back-link">← Назад к продуктам</a>
             </div>
         </div>

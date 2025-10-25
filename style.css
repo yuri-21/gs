@@ -16,7 +16,7 @@ body {
 }
 
 /* ========== ШАПКА ========== */
-header {
+/* header {
     background: white;
     padding: 30px 20px;
     text-align: center;
@@ -36,6 +36,39 @@ header a {
 }
 
 header a:hover {
+    color: #8b5563;
+}
+*/
+
+/* ========== ШАПКА ========== */
+header {
+    background: white;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header h1 a {
+    font-family: 'Rouge Script', cursive;
+    font-size: 48px;
+    color: #b76e79;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header h1 a:hover {
     color: #8b5563;
 }
 
@@ -91,6 +124,7 @@ main {
 }
 
 /* ========== ФУТЕР ========== */
+/*
 footer {
     background: white;
     padding: 30px 20px;
@@ -118,8 +152,71 @@ footer a:hover {
     color: #666;
     margin-top: 10px;
 }
+*/
+
+
+/* ========== ФУТЕР ========== */
+footer {
+    background: white;
+    padding: 30px 0 20px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer p a {
+    font-family: 'Rouge Script', cursive;
+    font-size: 32px;
+    color: #b76e79;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer p a:hover {
+    color: #8b5563;
+}
+
+/* ========== НАВИГАЦИЯ В ФУТЕРЕ ========== */
+.footer-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.footer-nav a:hover {
+    color: #b76e79;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-top: 15px;
+}
+
 
 /* ========== АДАПТИВ ДЛЯ ПЛАНШЕТОВ ========== */
+/*
 @media (max-width: 1024px) {
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -130,9 +227,9 @@ footer a:hover {
         font-size: 48px;
     }
 }
-
+*/
 /* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ========== */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     main {
         padding: 40px 15px;
     }
@@ -177,6 +274,66 @@ footer a:hover {
         padding: 15px;
     }
 }
+*/
+
+
+
+/* ========== АДАПТИВ ДЛЯ ПЛАНШЕТОВ ========== */
+@media (max-width: 768px) {
+    header h1 a {
+        font-size: 36px;
+    }
+
+    .main-nav {
+        gap: 20px;
+    }
+
+    .main-nav a {
+        font-size: 14px;
+    }
+
+    footer p a {
+        font-size: 28px;
+    }
+
+    .footer-nav {
+        gap: 20px;
+    }
+
+    .footer-nav a {
+        font-size: 13px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ========== */
+@media (max-width: 480px) {
+    .header-container,
+    .footer-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    header h1 a {
+        font-size: 32px;
+    }
+
+    .main-nav,
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .main-nav a,
+    .footer-nav a {
+        font-size: 14px;
+    }
+
+    footer p a {
+        font-size: 24px;
+    }
+}
+
+
 
 
 /* ========== КАРТОЧКА ПРОДУКТА (обновлённая) ========== */
@@ -635,6 +792,7 @@ footer a:hover {
 
 
 /* ========== НАВИГАЦИЯ ========== */
+/*
 .main-nav {
     text-align: center;
     margin-top: 20px;
@@ -658,4 +816,24 @@ footer a:hover {
         margin: 0 10px;
         font-size: 14px;
     }
+}
+*/
+
+/* ========== НАВИГАЦИЯ В ШАПКЕ ========== */
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.main-nav a:hover {
+    color: #b76e79;
 }

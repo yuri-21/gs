@@ -1,7 +1,7 @@
 /* order-ptimilk.css */
 
 .order-ptimilk {
-    max-width: 480px;
+    max-width: 520px;
     margin: 0 auto;
     background: #fff5f7;
     padding: 20px;
@@ -16,42 +16,83 @@
     margin-bottom: 20px;
 }
 
-#ptimilk-configurator label {
+.ptimilk-box {
+    border: 1px solid #b76e79;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.ptimilk-box label {
     display: block;
     margin-bottom: 15px;
     font-weight: bold;
     color: #333;
 }
 
-.flavors-container {
+.flavors-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    gap: 10px;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .flavor-item {
     flex: 1;
-    text-align: center;
     background: white;
-    padding: 10px;
-    border-radius: 8px;
     border: 1px solid #b76e79;
+    border-radius: 8px;
+    text-align: center;
+    padding: 8px;
+    position: relative;
 }
 
 .flavor-item img {
     max-width: 100%;
-    height: 70px;
+    height: 60px;
     object-fit: contain;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .flavor-item label {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-.flavor-qty {
-    width: 50px;
+.flavor-minus {
+    background: #b76e79;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1;
+}
+
+.flavor-minus:hover {
+    background: #8b5563;
+}
+
+.flavor-qty-input {
+    width: 40px;
+    border: 1px solid #b76e79;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+}
+
+.box-count-input {
+    width: 60px;
+    font-weight: bold;
     font-size: 16px;
     text-align: center;
     border: 1px solid #b76e79;
@@ -59,31 +100,59 @@
     outline: none;
 }
 
-.validation-message {
-    color: red;
-    min-height: 20px;
-    margin-bottom: 15px;
-    text-align: center;
+.box-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #b76e79;
+    margin-top: 10px;
 }
 
-#add-to-cart-btn {
+.remove-box-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e06c75;
+    border: none;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.remove-box-btn:hover {
+    background: #b44a56;
+}
+
+#add-box-btn, #submit-order {
     width: 100%;
-    background-color: #b76e79;
+    padding: 12px 0;
+    background: #b76e79;
+    border: none;
     color: white;
     font-weight: 600;
     font-size: 18px;
-    padding: 10px 0;
-    border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 15px;
 }
 
-#add-to-cart-btn:disabled {
-    background-color: #c9b2b7;
+#add-box-btn:hover:not(:disabled), #submit-order:hover:not(:disabled) {
+    background-color: #8b5563;
+}
+
+#submit-order:disabled {
+    background-color: #d9aeb4;
     cursor: not-allowed;
 }
 
-#add-to-cart-btn:not(:disabled):hover {
-    background-color: #8b5563;
+#total-price-container {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #b76e79;
 }

@@ -1,15 +1,17 @@
+// order-ptimilk.js
+
 document.addEventListener('DOMContentLoaded', () => {
   const prices = {3: 350, 9: 790, 16: 1350};
   const container = document.querySelector('.boxes-area');
   const addBoxBtn = document.getElementById('add-box-btn');
   const totalPriceElem = document.getElementById('total-price');
-  const submitOrderBtn = document.getElementById('submit-order');
-  const boxImages = document.querySelectorAll('.box-selection .box-image');
+  const submitOrderBtn = document.getElementById('order-submit');
+  const boxImages = document.querySelectorAll('.box-selection .box-item');
 
   function updateTotalPrice() {
     let total = 0;
     document.querySelectorAll('.ptimilk-box').forEach(box => {
-      const priceText = box.querySelector('.price-value').textContent.replace(/\s/g, '');
+      const priceText = box.querySelector('.price-value').textContent.replace(/\s/g, '').replace('₽', '');
       total += Number(priceText);
     });
     totalPriceElem.textContent = total.toLocaleString('ru-RU');
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isNaN(val)) flavorSum += val;
     });
 
-    // Автоматическая корректировка при превышении результата
+    // Автоматическая коррекция
     if (flavorSum > boxSize) {
       let excess = flavorSum - boxSize;
       for (let input of flavorQtyInputs) {
@@ -42,13 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       flavorSum = boxSize;
     } else if (flavorSum < boxSize) {
-      // Добавить разницу первому вкусу
       const firstInput = flavorQtyInputs[0];
-      const val = Number(firstInput.value);
-      firstInput.value = val + (boxSize - flavorSum);
+      firstInput.value = Number(firstInput.value) + (boxSize - flavorSum);
       flavorSum = boxSize;
     }
-    // Обновление max в инпутах
     flavorQtyInputs.forEach(input => {
       const maxVal = boxSize - (flavorSum - Number(input.value));
       input.max = maxVal;
@@ -86,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       boxCountInput.value = 1;
       updateBoxPrice(box);
+      updateActiveBoxImage(box, size);
     });
 
     flavorQtyInputs.forEach(input => {
@@ -112,18 +112,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Инициируем первый блок
-  const firstBox = document.querySelector('.ptimilk-box');
-  attachEvents(firstBox);
-  updateBoxPrice(firstBox);
+  function updateActiveBoxImage(box, size) {
+    const imageMap = {
+      3: 'ptimilk3.jpg',
+      9: 'ptimilk9.jpg',
+      16: 'ptimilk16.jpg'
+    };
+    const img = box.querySelector('.selected-box-image');
+    if (img && imageMap[size]) {
+      img.src = imageMap[size];
+      img.alt = `${size} конфет`;
+      img.title = `${size} конфет`;
+    }
+  }
 
-  // Инициализируем выбор коробки сверху
-  boxImages.forEach(img => {
-    img.addEventListener('click', () => {
+  // Инициализация выбора коробки сверху
+  boxImages.forEach(item => {
+    item.addEventListener('click', () => {
       boxImages.forEach(i => i.classList.remove('active'));
-      img.classList.add('active');
+      item.classList.add('active');
 
-      const type = img.dataset.boxType;
+      const type = item.dataset.boxType;
       const box = document.querySelector('.ptimilk-box');
       if (!box) return;
 
@@ -135,41 +144,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Добавить новую коробку
-  document.getElementById('add-box-btn').addEventListener('click', () => {
+  // Инициализация первого блока
+  const firstBox = document.querySelector('.ptimilk-box');
+  attachEvents(firstBox);
+  updateBoxPrice(firstBox);
+
+  // Кнопка добавить коробку
+  addBoxBtn.addEventListener('click', () => {
     const clone = firstBox.cloneNode(true);
     clone.dataset.boxIndex = document.querySelectorAll('.ptimilk-box').length;
     clone.querySelector('.remove-box-btn').style.display = 'block';
 
-    // Добавляем к ней событийные слушатели
     attachEvents(clone);
-
-    document.querySelector('.boxes-area').appendChild(clone);
-
-    // Обновляем цену
     updateBoxPrice(clone);
+
+    container.appendChild(clone);
   });
 
-  // Кнопка оформления
+  // Кнопка оформить заказ
   submitOrderBtn.addEventListener('click', () => {
     if (submitOrderBtn.disabled) return;
-    // Сбор данных для отправки
 
     const boxes = [];
-    document.querySelectorAll('.ptimilk-box').forEach(box => {
+    container.querySelectorAll('.ptimilk-box').forEach(box => {
       const size = Number(box.querySelector('.box-size-select').value);
       const count = Number(box.querySelector('.box-count-input').value);
       const flavors = {};
       box.querySelectorAll('.flavor-qty-input').forEach((input, i) => {
-        const flavor = ['cocoa', 'strawberry', 'coconut', 'pistachio'][i];
-        flavors[flavor] = Number(input.value) || 0;
+        const flavorOrder = ['cocoa', 'strawberry', 'coconut', 'pistachio'];
+        flavors[flavorOrder[i]] = Number(input.value) || 0;
       });
       boxes.push({size, count, flavors});
     });
 
     console.log('Заказ:', boxes);
-    alert('Заказ отправлен! Проверь консоль для деталей.');
+    alert('Заказ принят! Подробности в консоли.');
 
-    // TODO: отправить на сервер через AJAX или форму
+    // Здесь можно подключить отправку данных на сервер
   });
+
+  updateTotalPrice();
 });

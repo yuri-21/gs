@@ -166,23 +166,248 @@
 #add-box-btn:hover, #submit-order:hover {
   background-color: #8b5563;
 }
-#submit-order:disabled {
+#submit-order:disabled {.order-ptimilk-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 25px;
+  background: #fff5f7;
+  border: 2px solid #b76e79;
+  border-radius: 16px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+}
+
+.order-ptimilk-container h3 {
+  text-align: center;
+  color: #b76e79;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.box-selection {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.box-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.box-item img {
+  border-radius: 10px;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border: 2px solid transparent;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.box-item.active img {
+  border-color: #b76e79;
+  box-shadow: 0 0 12px rgba(183, 110, 121, 0.4);
+}
+
+.box-item .caption {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #52333a;
+}
+
+.boxes-area {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.ptimilk-box {
+  border: 2px solid #b76e79;
+  border-radius: 12px;
+  padding: 15px 20px;
+  background: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.box-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.box-image-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  gap: 10px;
+}
+
+.selected-box-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 2px solid #b76e79;
+}
+
+.box-size-select {
+  width: 100%;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1.5px solid #b76e79;
+  padding: 8px 10px;
+  cursor: pointer;
+  user-select: text;
+}
+
+.flavors-group {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flavor-row {
+  display: flex;
+  gap: 26px;
+}
+
+.flavor-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #fbe9ee;
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid #b76e79;
+  min-width: 130px;
+  justify-content: center;
+}
+
+.flavor-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.flavor-qty-input {
+  width: 45px;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1.5px solid #b76e79;
+  text-align: center;
+  outline: none;
+  padding: 4px;
+}
+
+.box-controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 14px;
+}
+
+.box-count-input {
+  width: 70px;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 7px 6px;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid #b76e79;
+  outline: none;
+}
+
+.box-price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #b76e79;
+  min-width: 110px;
+  text-align: right;
+}
+
+.remove-box-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #e06c75;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  display: none;
+  white-space: nowrap;
+}
+
+.ptimilk-box:not(:first-child) .remove-box-btn {
+  display: block;
+}
+
+#add-box-btn, #order-submit {
+  width: 100%;
+  font-weight: 700;
+  font-size: 20px;
+  border-radius: 14px;
+  padding: 16px 0;
+  cursor: pointer;
+  border: none;
+  margin-top: 18px;
+  transition: background-color 0.3s ease;
+  color: white;
+  background-color: #b76e79;
+}
+
+#add-box-btn:hover, #order-submit:hover {
+  background-color: #8b5563;
+}
+
+#order-submit:disabled {
   background-color: #d9aeb4;
   cursor: not-allowed;
 }
 
-#total-price-container {
-  font-size: 21px;
+.total-area {
+  font-weight: 900;
+  font-size: 22px;
   text-align: center;
-  margin-top: 7px;
-  font-weight: 700;
+  margin-top: 14px;
   color: #b76e79;
 }
 
-@media (max-width: 600px) {
-  .order-ptimilk-container {padding:10px;}
-  .flavors-inline {gap: 7px 7px; max-width: 240px;}
-  .flavor-inline {min-width: 95px;}
-  .box-image {width: 52px; height: 52px;}
-  .box-selection .caption {width: 52px;}
+@media (max-width: 720px) {
+  .box-content {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .box-image-wrap {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+  }
+  .box-size-select {
+    width: auto;
+  }
+  .flavor-row {
+    justify-content: center;
+  }
+  .flavor-item {
+    min-width: 110px;
+  }
+  .box-controls {
+    justify-content: center;
+  }
 }

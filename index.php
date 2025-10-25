@@ -6,7 +6,7 @@ include 'includes/header.php';
 <section class="products" aria-label="Продукты Gulnaz Sweets">
   <div class="product">
     <img src="ptimilk.jpg" alt="Конфеты Птимилк" />
-    <h2>Конфеты Птимилк</h2>
+    <h2>Птимилк</h2>
   </div>
   <div class="product">
     <img src="iriska.jpg" alt="Ириски сливочные" />

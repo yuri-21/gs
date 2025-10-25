@@ -82,12 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function addBox(index = null) {
         if (index === null) index = container.children.length;
 
-        // Создадим копию первого блока и обновим все индексы и события
         const firstBox = container.querySelector('.ptimilk-box');
         const clone = firstBox.cloneNode(true);
         clone.dataset.boxIndex = index;
 
-        // Обновляем id и value по дефолту в зависимости от размера
         const sizeSelect = clone.querySelector('.box-size-select');
         sizeSelect.value = "9";
 
@@ -99,17 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const flavorQtyInputs = clone.querySelectorAll('.flavor-qty-input');
         flavorQtyInputs.forEach((input, idx) => {
-            input.value = defaults[9][idx]; // значение по умолчанию для 9 шт
+            input.value = defaults[9][idx]; 
         });
 
         clone.querySelector('.box-count-input').value = 1;
         clone.querySelector('.price-value').textContent = prices[9];
-
-        // Покажем кнопку удалить (для всех кроме первого)
         clone.querySelector('.remove-box-btn').style.display = 'block';
 
         container.appendChild(clone);
-
         attachBoxEvents(clone);
         updateBoxPrice(clone);
     }
@@ -159,8 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Инициализация: 
-    // навешиваем события на первый блок и кнопку добавления коробки
     const firstBox = container.querySelector('.ptimilk-box');
     attachBoxEvents(firstBox);
     updateBoxPrice(firstBox);
@@ -172,14 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
     submitOrderBtn.addEventListener('click', () => {
         if (submitOrderBtn.disabled) return;
 
-        // Собираем все данные для отправки на сервер
         const boxes = [];
         container.querySelectorAll('.ptimilk-box').forEach(box => {
             const size = box.querySelector('.box-size-select').value;
             const count = box.querySelector('.box-count-input').value;
             const flavors = {};
             box.querySelectorAll('.flavor-qty-input').forEach(input => {
-                const flavor = input.closest('.flavor-item').dataset.flavorId;
+                const flavor = input.closest('.flavor-inline').dataset.flavorId;
                 flavors[flavor] = parseInt(input.value, 10) || 0;
             });
             boxes.push({size: parseInt(size,10), count: parseInt(count,10), flavors: flavors});
@@ -188,10 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Отправляем заказ:', boxes);
         alert('Заказ принят! Подробности в консоли.');
 
-        // TODO: отправить boxes через AJAX или форму на сервер
+        // Здесь добавить отправку на сервер
     });
 
-    // Запуск проверки, подсчёта итого
     updateTotalPrice();
     validateForm();
 });

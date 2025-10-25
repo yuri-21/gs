@@ -41,7 +41,7 @@
 .flavor-inline {
     display: flex;
     align-items: center;
-    border: 1px solid #b76e79;
+    border: 0px/* 1px solid #b76e79 */;
     border-radius: 8px;
     padding: 6px 8px;
     gap: 6px;

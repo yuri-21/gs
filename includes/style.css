@@ -1,165 +1,289 @@
-/* ===== БАЗОВЫЕ СТИЛИ ===== */
+/* ========== СБРОС И БАЗОВЫЕ СТИЛИ ========== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #d4858f;
+    --color-primary-dark: #b76e79;
+    --color-secondary: #f5e6e8;
+    --color-text: #2c1810;
+    --color-text-light: #6b5b52;
+    --color-bg: #fdfbfb;
+    --color-white: #ffffff;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 8px 24px rgba(212, 133, 143, 0.15);
+    --shadow-lg: 0 16px 48px rgba(212, 133, 143, 0.25);
+}
+
 body {
-    font-family: 'Roboto', Arial, sans-serif;
-    background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%);
-    color: #3e2f2f;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.6;
-    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
 }
 
-/* ===== ШАПКА ===== */
+/* ========== ШАПКА ========== */
 .site-header {
-    background: #fff;
-    padding: 30px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 50px;
+    background: var(--color-white);
+    padding: 24px 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logo-link {
+    text-decoration: none;
+    display: inline-block;
 }
 
 .site-logo {
-    font-family: 'Rouge Script', cursive;
-    font-size: 56px;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--color-primary-dark);
     text-align: center;
-    font-weight: normal;
-    margin: 0;
-}
-
-.site-logo a {
-    color: #b76e79;
-    text-decoration: none;
+    letter-spacing: -0.5px;
     transition: color 0.3s ease;
 }
 
-.site-logo a:hover {
-    color: #8b5563;
+.logo-link:hover .site-logo {
+    color: var(--color-primary);
 }
 
-/* ===== СЕТКА ПРОДУКТОВ ===== */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 35px;
-    padding: 20px 0;
+/* ========== ГЕРОЙ-СЕКЦИЯ ========== */
+.hero {
+    background: linear-gradient(135deg, #ffeef2 0%, #ffe0e6 100%);
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    color: var(--color-text-light);
+    font-weight: 300;
+}
+
+/* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+.main-content {
+    padding-bottom: 80px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--color-text);
     margin-bottom: 50px;
 }
 
-/* ===== КАРТОЧКА ПРОДУКТА ===== */
+/* ========== СЕТКА ПРОДУКТОВ ========== */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+/* ========== КАРТОЧКА ПРОДУКТА ========== */
 .product-card {
-    background: #fff;
-    border-radius: 16px;
+    background: var(--color-white);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .product-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(183, 110, 121, 0.3);
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-lg);
 }
 
-.product-card:active {
-    transform: translateY(-8px) scale(1.01);
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
-/* ===== ИЗОБРАЖЕНИЕ ПРОДУКТА ===== */
-.product-image {
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
+/* ========== ИЗОБРАЖЕНИЕ ПРОДУКТА ========== */
+.product-image-wrapper {
     position: relative;
-    background: #f8f8f8;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: var(--color-secondary);
 }
 
-.product-image img {
+.product-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s ease;
 }
 
-.product-card:hover .product-image img {
-    transform: scale(1.1);
+.product-card:hover .product-img {
+    transform: scale(1.15);
 }
 
-/* ===== ИНФОРМАЦИЯ О ПРОДУКТЕ ===== */
-.product-info {
-    padding: 25px 20px;
-    text-align: center;
+/* ========== ОВЕРЛЕЙ ========== */
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(44, 24, 16, 0.7) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-.product-info h3 {
-    font-family: 'Rouge Script', cursive;
-    font-size: 32px;
-    color: #b76e79;
-    margin: 0;
-    font-weight: normal;
+.product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.view-more {
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* ========== ДЕТАЛИ ПРОДУКТА ========== */
+.product-details {
+    padding: 28px 24px;
+}
+
+.product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-bottom: 8px;
     transition: color 0.3s ease;
 }
 
-.product-card:hover .product-info h3 {
-    color: #8b5563;
+.product-card:hover .product-name {
+    color: var(--color-primary);
 }
 
-/* ===== ФУТЕР ===== */
+.product-description {
+    font-size: 15px;
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+/* ========== ФУТЕР ========== */
 .site-footer {
-    background: #fff;
-    padding: 25px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    margin-top: auto;
+    background: var(--color-white);
+    padding: 48px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+    margin-top: 80px;
 }
 
-.site-footer p {
+.footer-content {
     text-align: center;
-    color: #666;
-    font-size: 14px;
 }
 
-.site-logo-small {
-    font-family: 'Rouge Script', cursive;
-    font-size: 18px;
-    color: #b76e79;
+.footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-bottom: 8px;
 }
 
-/* ===== АДАПТИВ ДЛЯ ПЛАНШЕТОВ ===== */
+.footer-text {
+    font-size: 15px;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+}
+
+.footer-copy {
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+/* ========== АДАПТИВ ДЛЯ ПЛАНШЕТОВ ========== */
 @media (max-width: 768px) {
-    .site-logo {
-        font-size: 42px;
+    .hero {
+        padding: 60px 0;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+    }
+
+    .section-title {
+        font-size: 30px;
     }
 
     .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
     }
 
-    .product-image {
-        height: 220px;
-    }
-
-    .product-info h3 {
-        font-size: 28px;
+    .product-image-wrapper {
+        height: 280px;
     }
 }
 
-/* ===== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ===== */
+/* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ========== */
 @media (max-width: 480px) {
     .site-logo {
-        font-size: 36px;
+        font-size: 32px;
+    }
+
+    .hero {
+        padding: 40px 0;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 26px;
+        margin-bottom: 32px;
     }
 
     .products-grid {
@@ -167,15 +291,15 @@ body {
         gap: 20px;
     }
 
-    .product-image {
-        height: 240px;
+    .product-image-wrapper {
+        height: 260px;
     }
 
-    .product-info {
-        padding: 20px 15px;
+    .product-name {
+        font-size: 22px;
     }
 
-    .product-info h3 {
-        font-size: 26px;
+    .product-description {
+        font-size: 14px;
     }
 }

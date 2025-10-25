@@ -1,148 +1,188 @@
-/* Общий контейнер */
 .order-ptimilk-container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  max-width: 820px;
+  margin: 30px auto;
+  background: #fff5f7;
+  padding: 30px 25px;
+  border: 2px solid #b76e79;
+  border-radius: 16px;
   font-family: Arial, sans-serif;
 }
 
-/* Заголовок */
-h3 {
+.order-ptimilk-container h3 {
   text-align: center;
   color: #b76e79;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  font-size: 24px;
 }
 
-/* Выбор коробки стрелками (иконки) */
+/* Блок выбора коробки — картинки с подписями */
 .box-selection {
   display: flex;
+  gap: 36px;
   justify-content: center;
-  gap: 30px;
-  margin-bottom: 20px;
+  align-items: end;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 .box-image {
   width: 80px;
+  height: 80px;
   cursor: pointer;
   border: 2px solid transparent;
-  border-radius: 8px;
-  transition: border 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  transition: border 0.2s, box-shadow 0.2s;
+  display: block;
+  margin-bottom: 6px;
+  object-fit: contain;
 }
-.box-image:hover, .box-image.active {
+.box-image.active {
   border-color: #b76e79;
-  box-shadow: 0 0 10px rgba(183, 110, 121, 0.3);
+  box-shadow: 0 0 14px #fccbe0ad;
+}
+.box-selection .caption {
+  width: 80px;
+  text-align: center;
+  font-size: 14px;
+  color: #52333a;
+  margin-top: -8px;
+  margin-bottom: 8px;
 }
 
-/* Область выбранных коробок (добавляем в динамике) */
+/* Коробка – блок с наполнением */
 .boxes-area {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
-/* Блок коробки */
-.box-group {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  padding: 10px;
+.ptimilk-box {
   border: 2px solid #b76e79;
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 12px;
+  background: white;
+  padding: 20px 14px;
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Удалять блок можно только с 2-го и далее */
-.btn-delete {
+.ptimilk-box label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 13px;
+  font-size: 15px;
+}
+
+/* Вкусы в две строки по два */
+.flavors-inline {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px 30px;
+  justify-items: center;
+  margin-bottom: 14px;
+  max-width: 360px;
+  margin-left: 0;
+}
+.flavor-inline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #b76e79;
+  border-radius: 8px;
+  padding: 6px 12px;
+  background: #fbe9ee;
+  min-width: 130px;
+  justify-content: center;
+}
+.flavor-inline img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+}
+.flavor-qty-input {
+  width: 45px;
+  text-align: center;
+  border: 1.5px solid #b76e79;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 4px 0;
+  outline: none;
+}
+
+.box-count-input {
+  width: 65px;
+  text-align: center;
+  border: 1.5px solid #b76e79;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 17px;
+  margin: 0 10px;
+}
+
+.box-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #b76e79;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Кнопка удаления */
+.remove-box-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 8px;
+  right: 8px;
   background: #e06c75;
-  color: #fff;
   border: none;
-  border-radius: 4px;
-  padding: 2px 6px;
-  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  padding: 4px 14px;
+  border-radius: 7px;
   cursor: pointer;
+  user-select: none;
   display: none;
 }
-.box-group:nth-child(n+2) .btn-delete {
+.ptimilk-box:not(:first-child) .remove-box-btn {
   display: block;
 }
 
-/* Внутри блока */
-.box-inner {
-  display: flex;
-  gap: 15px;
-  margin-left: 40px; /* чтобы исключить кнопку удаления */
-  flex-wrap: wrap;
-  align-items: center;
-}
-.box-inner > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
-}
-.box-inner img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-bottom: 4px;
-  cursor: default;
-}
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.qty-btn {
-  width: 24px;
-  height: 24px;
-  line-height: 22px;
-  border: 1px solid #b76e79;
-  border-radius: 4px;
-  background: #fff;
-  text-align: center;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 16px;
-}
-.qty-input {
-  width: 40px;
-  text-align: center;
-  border: 1px solid #b76e79;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 14px;
-}
-.price-display {
-  font-size: 16px;
-  font-weight: bold;
-  color: #b76e79;
-  min-width: 80px;
-  text-align: right;
-}
-
-/* Итог и кнопки */
-#add-box-btn, #order-submit {
+/* Крупные кнопки */
+#add-box-btn, #submit-order {
   width: 100%;
-  padding: 12px;
+  padding: 13px 0;
+  background: #b76e79;
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
+  color: white;
   font-weight: 600;
+  font-size: 19px;
+  border-radius: 12px;
   cursor: pointer;
+  transition: background 0.27s;
   margin-top: 20px;
-  transition: background 0.3s;
+  margin-bottom: 10px;
 }
-#add-box-btn:hover, #order-submit:hover {
-  background: #8b5563;
+#add-box-btn:hover, #submit-order:hover {
+  background-color: #8b5563;
 }
-#order-submit:disabled {
-  background: #d9aeb4;
+#submit-order:disabled {
+  background-color: #d9aeb4;
   cursor: not-allowed;
 }
-#total-price {
-  font-size: 20px;
-  font-weight: bold;
+
+#total-price-container {
+  font-size: 21px;
+  text-align: center;
+  margin-top: 7px;
+  font-weight: 700;
   color: #b76e79;
+}
+
+@media (max-width: 600px) {
+  .order-ptimilk-container {padding:10px;}
+  .flavors-inline {gap: 7px 7px; max-width: 240px;}
+  .flavor-inline {min-width: 95px;}
+  .box-image {width: 52px; height: 52px;}
+  .box-selection .caption {width: 52px;}
 }

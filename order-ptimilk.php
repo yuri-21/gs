@@ -59,7 +59,7 @@
             Количество коробок:
             <input type="number" min="1" max="99" class="box-count-input" value="1" />
           </label>
-          <div class="box-price">Цена: <span class="price-value">790</span> ₽</div>
+          <div class="box-price">Цена: <span class="price-value">790</span></div>
         </div>
       </div>
 

@@ -278,10 +278,18 @@ footer p a:hover {
 
 
 
+
 /* ========== АДАПТИВ ДЛЯ ПЛАНШЕТОВ ========== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+    /* Сетка продуктов */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    /* Шапка */
     header h1 a {
-        font-size: 36px;
+        font-size: 48px;
     }
 
     .main-nav {
@@ -292,6 +300,7 @@ footer p a:hover {
         font-size: 14px;
     }
 
+    /* Футер */
     footer p a {
         font-size: 28px;
     }
@@ -305,31 +314,106 @@ footer p a:hover {
     }
 }
 
-/* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ ========== */
+/* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ (768px) ========== */
+@media (max-width: 768px) {
+    /* Основной контент */
+    main {
+        padding: 40px 15px;
+    }
+
+    /* Сетка продуктов */
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-card h3 {
+        font-size: 22px;
+    }
+
+    /* Шапка */
+    header h1 a {
+        font-size: 40px;
+    }
+
+    /* Футер */
+    footer p a {
+        font-size: 28px;
+    }
+
+    /* Страницы */
+    .about-content h2,
+    .cart-content h2 {
+        font-size: 28px;
+    }
+
+    .about-section h3,
+    .cart-summary h3 {
+        font-size: 20px;
+    }
+
+    .cart-total {
+        font-size: 28px;
+    }
+
+    .cart-items,
+    .cart-summary {
+        padding: 20px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ МОБИЛЬНЫХ (480px) ========== */
 @media (max-width: 480px) {
-    .header-container,
-    .footer-container {
+    /* Шапка */
+    header {
+        padding: 20px 15px;
+    }
+
+    .header-container {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
 
     header h1 a {
-        font-size: 32px;
+        font-size: 36px;
     }
 
-    .main-nav,
-    .footer-nav {
+    .main-nav {
         gap: 15px;
     }
 
-    .main-nav a,
-    .footer-nav a {
+    .main-nav a {
         font-size: 14px;
+    }
+
+    /* Сетка продуктов */
+    .product-card img {
+        height: 200px;
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    /* Футер */
+    .footer-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
 
     footer p a {
         font-size: 24px;
+    }
+
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .footer-nav a {
+        font-size: 14px;
     }
 }
 

@@ -185,3 +185,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateTotalPrice();
 });
+
+
+
+
+
+function updateSelectionInfo(box) {
+  const size = Number(box.querySelector('.box-size-select').value);
+  const flavorInputs = box.querySelectorAll('.flavor-qty-input');
+  const chosenSpan = box.querySelector('.chosen-count');
+  const remainingSpan = box.querySelector('.remaining-count');
+
+  let sum = 0;
+  flavorInputs.forEach(input => {
+    const val = parseInt(input.value, 10) || 0;
+    sum += val;
+  });
+
+  const remaining = Math.max(0, size - sum);
+
+  chosenSpan.textContent = sum;
+  remainingSpan.textContent = remaining;
+
+  // Блокируем увеличение, если суммарно достигнут лимит
+  if (remaining === 0) {
+    flavorInputs.forEach(input => {
+      input.max = parseInt(input.value, 10);
+    });
+  } else {
+    // Устанавливаем максимум как size минус сумма остальных
+    flavorInputs.forEach(input => {
+      const currentVal = parseInt(input.value, 10) || 0;
+      const maxForInput = currentVal + remaining;
+      input.max = maxForInput;
+    });
+  }
+}
+
+function attachInfoUpdater(box) {
+  const inputs = box.querySelectorAll('.flavor-qty-input');
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      let val = parseInt(input.value, 10);
+      if (isNaN(val) || val < 0) val = 0;
+      if (val > parseInt(input.max, 10)) val = parseInt(input.max, 10);
+      input.value = val;
+      updateSelectionInfo(box);
+    });
+  });
+  // Вызов изначально
+  updateSelectionInfo(box);
+}
+
+// После создания или при инициализации блоков вызываем
+document.querySelectorAll('.ptimilk-box').forEach(box => {
+  attachInfoUpdater(box);
+});

@@ -54,6 +54,11 @@
           </div>
         </div>
 
+
+<div class="selection-info">
+  Выбрано <span class="chosen-count">0</span> конфет, выберите еще <span class="remaining-count">0</span>
+</div>
+
         <div class="box-controls">
           <label>
             Количество коробок:

@@ -1,85 +1,87 @@
 .order-iriska .quantity-order-widget {
-    display: inline-flex;
-    align-items: center;
-    border: 2px solid #b76e79;
-    border-radius: 12px;
-    overflow: hidden; /* для обрезания внутренних углов */
-    font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  border: 2px solid #b76e79;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  width: fit-content; /* чтобы блок не растягивался лишнего */
 }
 
+/* кнопки + и - с границами справа, кроме + */
 .order-iriska .qty-btn {
-    border: none;
-    background: white;
-    color: #b76e79;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 10px 18px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-right: 1px solid #b76e79;
-    /* закругления: левые у minus, правые у plus*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: none;
+  background: white;
+  color: #b76e79;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-right: 1px solid #b76e79;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .order-iriska .qty-btn.minus-btn {
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
 .order-iriska .qty-btn.plus-btn {
-    border-right: none; /* последний у кнопок + */
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  border-right: none;
 }
 
 .order-iriska .qty-btn:hover {
-    background-color: #b76e79;
-    color: white;
+  background-color: #b76e79;
+  color: white;
 }
 
+/* поле ввода */
 .order-iriska .qty-input {
-    border: none;
-    width: 60px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    outline: none;
-    user-select: text;
-    -moz-appearance: textfield;
-    /* убрать стрелки в Chrome */
+  width: 60px;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  color: #333;
+  -moz-appearance: textfield;
 }
 
+/* убрать стрелки input number в Chrome */
 .order-iriska .qty-input::-webkit-inner-spin-button,
 .order-iriska .qty-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-/* Кнопка заказа */
+/* Кнопка заказать занимает оставшееся пространство и имеет свои скругления */
 .order-iriska .order-btn {
-    border: none;
-    background: #b76e79;
-    color: white;
-    font-weight: 600;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    transition: background-color 0.3s ease;
+  border: none;
+  background: #b76e79;
+  color: white;
+  font-weight: 600;
+  padding: 10px 25px;
+  cursor: pointer;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  white-space: nowrap;
+  flex-grow: 1; /* растягиваем кнопку */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 .order-iriska .order-btn:hover {
-    background-color: #8b5563;
+  background-color: #8b5563;
 }
 
 .order-iriska .order-text {
-    font-size: 16px;
-    user-select: none;
+  font-size: 16px;
+  user-select: none;
+  white-space: nowrap;
 }

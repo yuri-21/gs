@@ -1,5 +1,7 @@
-    <footer>
-        <p class="footer-text">© 2025 <span class="logo">Gulnaz Sweets</span>. Все права защищены.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 <span class="site-logo-small">Gulnaz Sweets</span>. Все права защищены.</p>
+        </div>
     </footer>
 </body>
 </html>

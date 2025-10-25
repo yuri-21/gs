@@ -1,30 +1,43 @@
-<?php
-session_start();
-include 'includes/header.php';
-?>
+<?php include 'includes/header.php'; ?>
 
-<div class="products-grid">
-    <a href="ptimilk.php" class="product-card">
-        <img src="images/ptimilk.jpg" alt="Конфеты Птимилк">
-        <h3>Конфеты Птимилк</h3>
-    </a>
+<main class="container">
+    <div class="products-grid">
+        <a href="ptimilk.php" class="product-card">
+            <div class="product-image">
+                <img src="ptimilk.jpg" alt="Конфеты Птимилк">
+            </div>
+            <div class="product-info">
+                <h3>Конфеты Птимилк</h3>
+            </div>
+        </a>
 
-    <a href="iriska.php" class="product-card">
-        <img src="images/iriska.jpg" alt="Ириски сливочные">
-        <h3>Ириски сливочные</h3>
-    </a>
+        <a href="iriska.php" class="product-card">
+            <div class="product-image">
+                <img src="iriska.jpg" alt="Ириски сливочные">
+            </div>
+            <div class="product-info">
+                <h3>Ириски сливочные</h3>
+            </div>
+        </a>
 
-    <a href="nuts.php" class="product-card">
-        <img src="images/nuts.jpg" alt="Орешки со сгущенным молоком">
-        <h3>Орешки со сгущенным молоком</h3>
-    </a>
+        <a href="nuts.php" class="product-card">
+            <div class="product-image">
+                <img src="nuts.jpg" alt="Орешки со сгущенным молоком">
+            </div>
+            <div class="product-info">
+                <h3>Орешки со сгущенным молоком</h3>
+            </div>
+        </a>
 
-    <a href="halva.php" class="product-card">
-        <img src="images/halva.jpg" alt="Халва натуральная">
-        <h3>Халва натуральная</h3>
-    </a>
-</div>
+        <a href="halva.php" class="product-card">
+            <div class="product-image">
+                <img src="halva.jpg" alt="Халва натуральная">
+            </div>
+            <div class="product-info">
+                <h3>Халва натуральная</h3>
+            </div>
+        </a>
+    </div>
+</main>
 
-<?php
-include 'includes/footer.php';
-?>
+<?php include 'includes/footer.php'; ?>

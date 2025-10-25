@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="order-ptimilk.css">
 
 <div class="order-ptimilk-container">
+<!--
   <h3>Выберите коробку</h3>
 
   <div class="box-selection">
@@ -17,7 +18,7 @@
       <div class="caption">16 конфет</div>
     </div>
   </div>
-
+-->
   <div class="boxes-area">
     <div class="ptimilk-box" data-box-index="0">
       <div class="box-content">

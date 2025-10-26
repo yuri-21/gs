@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
     <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
     <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
-    на сумму <span class="order-value" data-w>${formatSum(state.W)}</span>
+    <span class="order-sum">${formatSum(state.W * state.O)}</span>
     <span class="order-action" data-remove style="display:${idx===0?'none':'inline'}">удалить набор</span>
     <span class="order-warn" style="display:none;"></span>
     `;

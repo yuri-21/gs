@@ -14,16 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createBlock(state, idx) {
     const el = document.createElement('div');
-    el.className = 'order-row';
+    el.className = 'order-block';
 
     el.innerHTML = `
-      <span class="order-value" data-o>${state.O}</span> кор. по <span class="order-value" data-x>${state.X}</span> конфет:
-      <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
-      <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
-      <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
-      <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
-      <span class="order-action" data-remove style="display:${idx===0?'none':'inline'}">удалить набор</span>
-      <span class="order-warn" style="display:none;"></span>
+      <div class="order-row order-top">
+        <span class="order-value" data-o>${state.O}</span> коробок по
+        <span class="order-value" data-x>${state.X}</span> конфет, состав:
+        <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
+      </div>
+      <div class="order-row order-flavors">
+        <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
+        <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
+        <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
+        <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
+      </div>
     `;
     return el;
   }
@@ -41,19 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
       blocksWrap.append(el);
 
       el.querySelector('[data-o]').onclick = () => showInput(el, 'O', blocks, idx, 1);
-      el.querySelector('[data-x]').onclick = () => showSelect(el, 'X', [9,16], blocks, idx);
+      el.querySelector('[data-x]').onclick = () => showSelect(el, 'X', [9, 16], blocks, idx);
       el.querySelector('[data-k]').onclick = () => showInput(el, 'K', blocks, idx, 0);
       el.querySelector('[data-l]').onclick = () => showInput(el, 'L', blocks, idx, 0);
       el.querySelector('[data-m]').onclick = () => showInput(el, 'M', blocks, idx, 0);
       el.querySelector('[data-n]').onclick = () => showInput(el, 'N', blocks, idx, 0);
 
       el.querySelector('[data-remove]').onclick = () => {
-        blocks.splice(idx,1);
+        blocks.splice(idx, 1);
         render(blocks);
       };
     });
 
-    // "добавить набор" — отдельная строка после блоков
+    // новая отдельная строка "добавить набор"
     const addRow = document.createElement('div');
     addRow.className = 'order-row';
     addRow.innerHTML = '<span class="order-action" data-add>добавить набор</span>';
@@ -63,22 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
       render(blocks);
     };
 
-    // Итоги
-    let totalBoxes = blocks.reduce((s,b)=>s+b.O,0);
-    let totalSum = blocks.reduce((s,b)=>s+b.O*prices[b.X],0);
+    // Итоговые значения
+    const totalBoxes = blocks.reduce((s, b) => s + b.O, 0);
+    const totalSum = blocks.reduce((s, b) => s + b.O * prices[b.X], 0);
+    const sumK = blocks.reduce((s, b) => s + b.K * b.O, 0);
+    const sumL = blocks.reduce((s, b) => s + b.L * b.O, 0);
+    const sumM = blocks.reduce((s, b) => s + b.M * b.O, 0);
+    const sumN = blocks.reduce((s, b) => s + b.N * b.O, 0);
+    const sumX = blocks.reduce((s, b) => s + b.X * b.O, 0);
 
-    const sumK = blocks.reduce((s,b)=>s+b.K*b.O,0);
-    const sumL = blocks.reduce((s,b)=>s+b.L*b.O,0);
-    const sumM = blocks.reduce((s,b)=>s+b.M*b.O,0);
-    const sumN = blocks.reduce((s,b)=>s+b.N*b.O,0);
-    const sumX = blocks.reduce((s,b)=>s+b.X*b.O,0);
-
+    // Отрисовка итогового блока
     const summary = document.createElement('div');
     summary.className = 'order-summary';
     summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
     root.append(summary);
 
-    // Итоговая валидация
+    // Проверка валидности заказа
     let warn = '';
     if (sumK + sumL + sumM + sumN !== sumX) {
       warn = 'не все наборы составлены';
@@ -93,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
       root.append(warnBlock);
     }
 
-    // Кнопка оформить ниже итогов в отдельной строке
+    // Кнопка оформления заказа
     if (!root.querySelector('#order-submit')) {
       const submit = document.createElement('button');
       submit.id = 'order-submit';
@@ -123,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
     input.select();
 
     input.onblur = () => finishInput();
-    input.onkeydown = e => { if(e.key==='Enter'){ input.blur(); }};
+    input.onkeydown = e => { if (e.key === 'Enter') { input.blur(); } };
     function finishInput() {
-      let v = parseInt(input.value,10);
+      let v = parseInt(input.value, 10);
       if (isNaN(v) || v < minValue) v = minValue;
       blocks[idx][key] = v;
       input.remove();
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     select.onblur = () => finishSelect();
     select.onchange = () => finishSelect();
     function finishSelect() {
-      let v = parseInt(select.value,10);
+      let v = parseInt(select.value, 10);
       blocks[idx][key] = v;
       Object.assign(blocks[idx], defaults[v]);
       blocks[idx].O = 1;
@@ -165,6 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Стартовая отрисовка
-  render([Object.assign(stateForSize(9), {O: 1})]);
+  // Инициализация с дефолтным набором
+  render([Object.assign(stateForSize(9), { O: 1 })]);
 });

@@ -117,3 +117,35 @@
   vertical-align: middle;
   letter-spacing: 1px;
 }
+
+
+
+
+.order-block {
+  padding: 10px 0 14px 0;
+  margin: 0 0 18px 0;
+  border-bottom: 2px dashed #dcb6d1;
+  position: relative;
+}
+.order-block:last-child {
+  border-bottom: none;
+}
+.order-row.order-flavors {
+  margin-top: 4px;
+  font-size: 18px;
+}
+/* Остальное оформление полей и .order-value оставить как было */
+.order-row.order-top {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.order-row.order-flavors .order-flavor-img {
+  margin-left: 12px;
+  margin-right: 3px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+}

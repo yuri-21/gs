@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* try */
 
+/* temp off
 function updateSelectionMessage(box) {
   const size = Number(box.querySelector('.box-size-select').value);
   const flavorInputs = box.querySelectorAll('.flavor-qty-input');
@@ -93,6 +94,57 @@ function updateSelectionMessage(box) {
     messageElem.style.color = '#e06c75';
   }
 }
+*/
+
+/* another try */
+
+function updateSelectionMessage(box) {
+  const size = Number(box.querySelector('.box-size-select').value);
+  const flavorInputs = box.querySelectorAll('.flavor-qty-input');
+  const messageElem = box.querySelector('.selection-message');
+  if (!messageElem) return;
+
+  // Подписи для вкусов
+  const flavorLabels = {
+    cocoa: 'шоколадных',
+    strawberry: 'клубничных',
+    coconut: 'кокосовых',
+    pistachio: 'фисташковых'
+  };
+
+  // Собираем значения и имена
+  const flavors = {};
+  let sum = 0;
+  flavorInputs.forEach(input => {
+    const flavor = input.closest('.flavor-item').dataset.flavor;
+    const val = Number(input.value) || 0;
+    flavors[flavor] = val;
+    sum += val;
+  });
+
+  const cocoa = flavors.cocoa || 0;
+  const strawberry = flavors.strawberry || 0;
+
+  if (sum < size) {
+    messageElem.textContent =
+      `Выбрано конфет ${sum}: шоколадных — ${cocoa}, клубничных — ${strawberry}. Выберите еще ${size - sum}`;
+    messageElem.style.color = '#b76e79';
+  } else if (sum === size) {
+    messageElem.textContent =
+      `Выбрано конфет ${sum}: шоколадных — ${cocoa}, клубничных — ${strawberry}`;
+    messageElem.style.color = '#369336';
+  } else {
+    messageElem.textContent =
+      `Выбрано лишних конфет: ${sum - size}. Шоколадных — ${cocoa}, клубничных — ${strawberry}. Уточните`;
+    messageElem.style.color = '#e06c75';
+  }
+}
+
+// В attachEvents добавь вызов updateSelectionMessage(box) при изменениях
+
+
+/* end another try */
+
 
 function attachEvents(box) {
   const sizeSelect = box.querySelector('.box-size-select');

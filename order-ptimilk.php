@@ -54,15 +54,13 @@
           </div>
         </div>
 
-
 <div class="selection-info">
-  Выбрано <span class="chosen-count">0</span> конфет, выберите еще <span class="remaining-count">0</span>
   <span class="selection-message"></span>
 </div>
 
         <div class="box-controls">
           <label>
-            Количество коробок:
+            Количество таких коробок:
             <input type="number" min="1" max="99" class="box-count-input" value="1" />
           </label>
           <div class="box-price">Цена: <span class="price-value">790</span></div>

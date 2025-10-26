@@ -53,7 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
 
-    // Итоговые значения
+    // "добавить набор" — отдельная строка после блоков
+    const addRow = document.createElement('div');
+    addRow.className = 'order-row';
+    addRow.innerHTML = '<span class="order-action" data-add>добавить набор</span>';
+    root.append(addRow);
+    addRow.querySelector('[data-add]').onclick = () => {
+      blocks.push(stateForSize(9));
+      render(blocks);
+    };
+
+    // Итоги
     let totalBoxes = blocks.reduce((s,b)=>s+b.O,0);
     let totalSum = blocks.reduce((s,b)=>s+b.O*prices[b.X],0);
 
@@ -65,16 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const summary = document.createElement('div');
     summary.className = 'order-summary';
-    summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}<span class="order-action" data-add>добавить набор</span>`;
-
+    summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
     root.append(summary);
 
-    summary.querySelector('[data-add]').onclick = () => {
-      blocks.push(stateForSize(9));
-      render(blocks);
-    };
-
-    // Итоговая валидность
+    // Итоговая валидация
     let warn = '';
     if (sumK + sumL + sumM + sumN !== sumX) {
       warn = 'не все наборы составлены';
@@ -86,14 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const warnBlock = document.createElement('div');
       warnBlock.className = 'order-warn';
       warnBlock.innerHTML = warn;
-      summary.append(warnBlock);
-      document.getElementById('order-submit').disabled = true;
-    }
-    else {
-      document.getElementById('order-submit').disabled = false;
+      root.append(warnBlock);
     }
 
-    // Кнопка оформить
+    // Кнопка оформить ниже итогов в отдельной строке
     if (!root.querySelector('#order-submit')) {
       const submit = document.createElement('button');
       submit.id = 'order-submit';
@@ -101,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
       submit.innerText = 'Оформить';
       submit.disabled = !!warn;
       root.append(submit);
+    } else {
+      document.getElementById('order-submit').disabled = !!warn;
     }
   }
 

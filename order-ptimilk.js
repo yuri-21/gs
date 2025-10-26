@@ -1,9 +1,8 @@
 // order-ptimilk.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  const prices = {3: 350, 9: 790, 16: 1350};
+  const prices = {9: 790, 16: 1350};
   const defaults = {
-    3: {K: 1, L: 1, M: 1, N: 0},
     9: {K: 3, L: 2, M: 2, N: 2},
     16: {K: 4, L: 4, M: 4, N: 4}
   };
@@ -17,23 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.createElement('div');
     el.className = 'order-row';
 
-    // HTML: одна строка, все взаимодействие через .order-value (числа) и .order-action (добавить/удалить)
     el.innerHTML = `
-    <span class="order-value" data-o>${state.O}</span> кор. по <span class="order-value" data-x>${state.X}</span> конфет:
-    <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
-    <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
-    <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
-    <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
-    <span class="order-sum">${formatSum(state.W * state.O)}</span>
-    <span class="order-action" data-remove style="display:${idx===0?'none':'inline'}">удалить набор</span>
-    <span class="order-warn" style="display:none;"></span>
+      <span class="order-value" data-o>${state.O}</span> кор. по <span class="order-value" data-x>${state.X}</span> конфет:
+      <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
+      <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
+      <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
+      <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
+      <span class="order-action" data-remove style="display:${idx===0?'none':'inline'}">удалить набор</span>
+      <span class="order-warn" style="display:none;"></span>
     `;
     return el;
   }
 
   function stateForSize(size) {
     const vals = Object.assign({}, defaults[size]);
-    return {X: size, K: vals.K, L: vals.L, M: vals.M, N: vals.N, O: 1, W: prices[size]};
+    return {X: size, K: vals.K, L: vals.L, M: vals.M, N: vals.N, O: 1};
   }
 
   function render(blocks) {
@@ -43,13 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = createBlock(state, idx);
       blocksWrap.append(el);
 
-      // Подключаем логику поля-ссылки и редактирования
-      el.querySelector('[data-x]').onclick = () => showSelect(el, 'X', [3,9,16], blocks, idx);
+      el.querySelector('[data-o]').onclick = () => showInput(el, 'O', blocks, idx, 1);
+      el.querySelector('[data-x]').onclick = () => showSelect(el, 'X', [9,16], blocks, idx);
       el.querySelector('[data-k]').onclick = () => showInput(el, 'K', blocks, idx, 0);
       el.querySelector('[data-l]').onclick = () => showInput(el, 'L', blocks, idx, 0);
       el.querySelector('[data-m]').onclick = () => showInput(el, 'M', blocks, idx, 0);
       el.querySelector('[data-n]').onclick = () => showInput(el, 'N', blocks, idx, 0);
-      el.querySelector('[data-o]').onclick = () => showInput(el, 'O', blocks, idx, 1);
 
       el.querySelector('[data-remove]').onclick = () => {
         blocks.splice(idx,1);
@@ -57,17 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
 
-    // Итоги и возможность добавить набор
+    // Итоговые значения
     let totalBoxes = blocks.reduce((s,b)=>s+b.O,0);
     let totalSum = blocks.reduce((s,b)=>s+b.O*prices[b.X],0);
 
-    const sumK = blocks.reduce((s,b)=>s+b.K,0);
-    const sumL = blocks.reduce((s,b)=>s+b.L,0);
-    const sumM = blocks.reduce((s,b)=>s+b.M,0);
-    const sumN = blocks.reduce((s,b)=>s+b.N,0);
-    const sumX = blocks.reduce((s,b)=>s+b.X,0);
+    const sumK = blocks.reduce((s,b)=>s+b.K*b.O,0);
+    const sumL = blocks.reduce((s,b)=>s+b.L*b.O,0);
+    const sumM = blocks.reduce((s,b)=>s+b.M*b.O,0);
+    const sumN = blocks.reduce((s,b)=>s+b.N*b.O,0);
+    const sumX = blocks.reduce((s,b)=>s+b.X*b.O,0);
 
-    // Итоговый ряд
     const summary = document.createElement('div');
     summary.className = 'order-summary';
     summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}<span class="order-action" data-add>добавить набор</span>`;
@@ -79,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       render(blocks);
     };
 
-    // Итоговая валидация
+    // Итоговая валидность
     let warn = '';
     if (sumK + sumL + sumM + sumN !== sumX) {
       warn = 'не все наборы составлены';
@@ -109,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // UI для ввода числа
   function showInput(el, key, blocks, idx, minValue) {
     const span = el.querySelector(`[data-${key.toLowerCase()}]`);
     const val = blocks[idx][key];
@@ -138,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // UI для выбора размера коробки
   function showSelect(el, key, options, blocks, idx) {
     const span = el.querySelector(`[data-${key.toLowerCase()}]`);
     const cur = blocks[idx][key];
@@ -162,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function finishSelect() {
       let v = parseInt(select.value,10);
       blocks[idx][key] = v;
-      // Сбросить вкусы и О по дефолту для коробки
       Object.assign(blocks[idx], defaults[v]);
       blocks[idx].O = 1;
       select.remove();
@@ -171,6 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Инициализация
-  render([stateForSize(9)]);
+  // Стартовая отрисовка
+  render([Object.assign(stateForSize(9), {O: 1})]);
 });

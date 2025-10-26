@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Итоговый ряд
     const summary = document.createElement('div');
     summary.className = 'order-summary';
-    summary.innerHTML = `<span class="order-action" data-add>добавить набор</span></br>Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
+    summary.innerHTML = `<span class="order-action" data-add>добавить набор</span></br></br></br>Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
 
     root.append(summary);
 

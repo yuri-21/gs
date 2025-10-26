@@ -19,13 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // HTML: одна строка, все взаимодействие через .order-value (числа) и .order-action (добавить/удалить)
     el.innerHTML = `
-    Коробка на <span class="order-value" data-x>${state.X}</span> конфет,
-    в том числе:
+    <span class="order-value" data-o>${state.O}</span> кор. по <span class="order-value" data-x>${state.X}</span> конфет:
     <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
     <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
     <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
-    <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>.
-    Всего коробок — <span class="order-value" data-o>${state.O}</span>
+    <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
     на сумму <span class="order-value" data-w>${formatSum(state.W)}</span>
     <span class="order-action" data-remove style="display:${idx===0?'none':'inline'}">удалить набор</span>
     <span class="order-warn" style="display:none;"></span>

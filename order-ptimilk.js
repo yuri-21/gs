@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     submitOrderBtn.disabled = total === 0;
   }
 
+
+/*
   function updateBoxPrice(box) {
     const sizeSelect = box.querySelector('.box-size-select');
     const flavorQtyInputs = box.querySelectorAll('.flavor-qty-input');
@@ -65,6 +67,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateTotalPrice();
   }
+  */
+
+/* try */
+
+function updateSelectionMessage(box) {
+  const size = Number(box.querySelector('.box-size-select').value);
+  const flavorInputs = box.querySelectorAll('.flavor-qty-input');
+  let sum = 0;
+  flavorInputs.forEach(input => {
+    sum += Number(input.value) || 0;
+  });
+
+  const messageElem = box.querySelector('.selection-message');
+  if (!messageElem) return;
+
+  if (sum < size) {
+    messageElem.textContent = `Выбрано конфет: ${sum}, выберите ещё ${size - sum}`;
+    messageElem.style.color = '#b76e79';
+  } else if (sum === size) {
+    messageElem.textContent = `Выбрано конфет: ${sum}`;
+    messageElem.style.color = '#369336';
+  } else {
+    messageElem.textContent = `Выбрано лишних конфет: ${sum - size}. Уточните`;
+    messageElem.style.color = '#e06c75';
+  }
+}
+
+function attachEvents(box) {
+  const sizeSelect = box.querySelector('.box-size-select');
+  const flavorQtyInputs = box.querySelectorAll('.flavor-qty-input');
+  const boxCountInput = box.querySelector('.box-count-input');
+  const removeBtn = box.querySelector('.remove-box-btn');
+
+  sizeSelect.addEventListener('change', () => {
+    updateBoxPrice(box);
+    updateSelectionMessage(box);
+  });
+
+  flavorQtyInputs.forEach(input => {
+    input.addEventListener('input', () => {
+      let val = Number(input.value);
+      if (isNaN(val) || val < 0) val = 0;
+      if (val > 99) val = 99;
+      input.value = val;
+      updateBoxPrice(box);
+      updateSelectionMessage(box);
+    });
+  });
+
+  boxCountInput.addEventListener('input', () => {
+    let val = Number(boxCountInput.value);
+    if (isNaN(val) || val < 1) val = 1;
+    if (val > 99) val = 99;
+    boxCountInput.value = val;
+    updateBoxPrice(box);
+    updateSelectionMessage(box);
+  });
+
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      box.remove();
+      updateTotalPrice();
+    });
+  }
+}
+
+// При создании или инициализации блока:
+attachEvents(firstBox);
+updateSelectionMessage(firstBox);
+
+/* end try */
 
   function attachEvents(box) {
     const sizeSelect = box.querySelector('.box-size-select');

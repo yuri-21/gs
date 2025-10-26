@@ -48,7 +48,7 @@
               <input type="number" class="flavor-qty-input" min="0" max="9" value="2">
             </div>
             <div class="flavor-item" data-flavor="pistachio">
-              <img src="pistachio.jpg" alt="Фисташка" title="Фисташка"/>
+              <img src="pistachio.jpg" alt="Фисташка" title="Фисташка"/> 
               <input type="number" class="flavor-qty-input" min="0" max="9" value="2">
             </div>
           </div>
@@ -57,6 +57,7 @@
 
 <div class="selection-info">
   Выбрано <span class="chosen-count">0</span> конфет, выберите еще <span class="remaining-count">0</span>
+  <span class="selection-message"></span>
 </div>
 
         <div class="box-controls">

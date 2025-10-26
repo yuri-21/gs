@@ -88,3 +88,18 @@
   #order-submit {font-size:18px;}
   .order-value,.order-action {font-size:17px;}
 }
+
+.order-flavor-img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 22px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 4px;
+  margin-left: 6px;
+  box-shadow: 0 0 4px #b76e7911;
+}
+.order-row .order-value {
+  vertical-align: middle;
+}

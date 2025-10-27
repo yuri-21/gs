@@ -135,10 +135,12 @@
   padding-bottom: 0;
   margin-bottom: 1px;
   gap: 7px;
+  line-height: 1;
 }
 .order-row.order-flavors {
   margin-top: 0;
   font-size: 16px;
+  line-height: 1;
 }
 
 

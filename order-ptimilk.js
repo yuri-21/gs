@@ -30,7 +30,7 @@ function createBlock(state, idx) {
   el.className = 'order-block';
   el.innerHTML = `
     <div class="order-row order-top">
-      коробок <span class="order-value" data-o>${state.O}</span> на
+      <span class="order-value" data-o>${state.O}</span> кор. на
       <span class="order-value" data-x>${state.X}</span> конфет, состав:
       <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
     </div>

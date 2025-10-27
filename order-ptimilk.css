@@ -127,10 +127,6 @@
   border: 1px solid #efe6ee;
   border-radius: 7px;
   background: none;
-/* вот этот стиль центрирует по горизонтали. пробуем */
-  display: flex;
-  flex-direction: column;
-  align-items: left; /* вот этот стиль центрирует по горизонтали */
 }
 .order-row {
   font-size: 17px;
@@ -155,7 +151,6 @@
   font-size: 17px;
   font-weight: 600;
   text-align: left
-  align-self: flex-start; /* на случай flex родителя */
 }
 .order-flavor-img {
   width: 21px;

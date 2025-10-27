@@ -121,30 +121,6 @@
 
 
 
-
-.order-block {
-  margin: 0 0 7px 0;
-  padding: 6px 10px 6px 10px;
-  border: 1px solid #efe6ee;
-  border-radius: 7px;
-  background: none;
-  box-shadow: none;
-}
-.order-row.order-top {
-  font-size: 18px;
-  padding-bottom: 0;
-  margin-bottom: 1px;
-  gap: 7px;
-  line-height: 1;
-}
-.order-row.order-flavors {
-  margin-top: 0;
-  font-size: 16px;
-  line-height: 1;
-}
-
-
-
 .order-block {
   margin: 0 0 7px 0;
   padding: 5px 9px 6px 9px;

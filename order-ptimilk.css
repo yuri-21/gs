@@ -150,7 +150,8 @@
   margin-top: 4px;
   font-size: 17px;
   font-weight: 600;
-  text-align: left;
+  text-align: left
+  align-self: flex-start; /* на случай flex родителя */
 }
 .order-flavor-img {
   width: 21px;

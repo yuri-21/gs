@@ -12,25 +12,46 @@ document.addEventListener('DOMContentLoaded', () => {
     return (val || 0).toLocaleString('ru-RU') + ' ₽';
   }
 
-  function createBlock(state, idx) {
-    const el = document.createElement('div');
-    el.className = 'order-block';
 
-    el.innerHTML = `
-      <div class="order-row order-top">
-        <span class="order-value" data-o>${state.O}</span> коробок по
-        <span class="order-value" data-x>${state.X}</span> конфет, состав:
-        <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
-      </div>
-      <div class="order-row order-flavors">
-        <img src="cocoa.jpg" alt="шоколадный" class="order-flavor-img" /><span class="order-value" data-k>${state.K}</span>,
-        <img src="strawberry.jpg" alt="клубничный" class="order-flavor-img" /><span class="order-value" data-l>${state.L}</span>,
-        <img src="coconut.jpg" alt="кокосовый" class="order-flavor-img" /><span class="order-value" data-m>${state.M}</span>,
-        <img src="pistachio.jpg" alt="фисташковый" class="order-flavor-img" /><span class="order-value" data-n>${state.N}</span>
-      </div>
-    `;
-    return el;
+
+function createBlock(state, idx) {
+  const sum = state.K + state.L + state.M + state.N;
+  const need = state.X - sum;
+
+  // вычисляем опциональную подсказку
+  let warn = '';
+  if (need > 0) {
+    warn = `<span class="order-warn">положите ещё ${need} конфет</span>`;
+  } else if (need < 0) {
+    warn = `<span class="order-warn">уберите ${-need} конфет</span>`;
   }
+
+  const el = document.createElement('div');
+  el.className = 'order-block';
+  el.innerHTML = `
+    <div class="order-row order-top">
+      <span class="order-value" data-o>${state.O}</span> коробок по
+      <span class="order-value" data-x>${state.X}</span> конфет, состав:
+      <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
+    </div>
+    <div class="order-flavor-row">
+      <img src="cocoa.jpg" class="order-flavor-img" alt="какао" /> какао <span class="order-value" data-k>${state.K}</span>
+    </div>
+    <div class="order-flavor-row">
+      <img src="strawberry.jpg" class="order-flavor-img" alt="клубника" /> клубника <span class="order-value" data-l>${state.L}</span>
+    </div>
+    <div class="order-flavor-row">
+      <img src="coconut.jpg" class="order-flavor-img" alt="кокос" /> кокос <span class="order-value" data-m>${state.M}</span>
+    </div>
+    <div class="order-flavor-row">
+      <img src="pistachio.jpg" class="order-flavor-img" alt="фисташка" /> фисташка <span class="order-value" data-n>${state.N}</span>
+    </div>
+    <div class="order-row order-sum">Всего в наборе ${sum}${warn}</div>
+  `;
+  return el;
+}
+
+
 
   function stateForSize(size) {
     const vals = Object.assign({}, defaults[size]);

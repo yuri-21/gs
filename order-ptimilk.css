@@ -127,6 +127,10 @@
   border: 1px solid #efe6ee;
   border-radius: 7px;
   background: none;
+/* вот этот стиль центрирует по горизонтали. пробуем */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* вот этот стиль центрирует по горизонтали */
 }
 .order-row {
   font-size: 17px;

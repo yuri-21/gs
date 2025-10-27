@@ -1,6 +1,6 @@
 .order-row {
   display: flex;
-  align-items: center;
+  align-items: left;
   flex-wrap: wrap;
   gap: 12px;
   font-size: 19px;

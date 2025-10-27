@@ -119,27 +119,30 @@
 }
 
 
+
 .order-block {
-  /* padding: 10px 0 14px 0;
-  margin: 0 0 18px 0; */
-  /* border-bottom: 2px dashed #dcb6d1; */
-  position: relative;
+  padding: 4px 0 5px 0;
+  margin: 0 0 7px 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom: 1px dotted #ecd5e0;
 }
 .order-block:last-child {
-  /* border-bottom: none; */
+  border-bottom: none;
+}
+.order-row.order-top {
+  font-size: 18px;
+  padding-bottom: 0;
+  margin-bottom: 2px;
+  gap: 7px;
 }
 .order-row.order-flavors {
-  margin-top: 4px;
-  font-size: 18px;
+  margin-top: 0;
+  font-size: 16px;
 }
-/* Остальное оформление полей и .order-value оставить как было */
-.order-row.order-top {
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
+
+/*
 .order-row.order-flavors .order-flavor-img {
   margin-left: 12px;
   margin-right: 3px;
@@ -147,3 +150,4 @@
   height: 22px;
   vertical-align: middle;
 }
+*/

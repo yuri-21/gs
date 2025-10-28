@@ -1,3 +1,4 @@
+<!--/*
 <?php
 session_start();
 
@@ -21,7 +22,7 @@ include 'header.php';
                 </div>
             <?php else: ?>
                 <div class="cart-items">
-                    <!-- Здесь будут товары из корзины -->
+                    <!-- Здесь будут товары из корзины --><!--/*
                     <p>Функционал корзины в разработке</p>
                     <p>Добавленные товары отобразятся здесь</p>
                 </div>
@@ -37,5 +38,29 @@ include 'header.php';
         </div>
     </div>
 </main>
+
+<?php include 'footer.php'; ?>
+
+*/-->
+
+<?php include 'header.php'; ?>
+
+<?php
+// cart.php - минимальная страница корзины
+
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Корзина</title>
+<link rel="stylesheet" href="/order-ptimilk.css" />
+</head>
+<body>
+<h1>Ваша корзина</h1>
+<div id="cart-root"></div>
+<script src="/cart.js"></script>
+</body>
+</html>
 
 <?php include 'footer.php'; ?>

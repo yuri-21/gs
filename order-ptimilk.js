@@ -1,5 +1,3 @@
-<script src="/cart.js"></script>
-
 // order-ptimilk.js
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -192,34 +190,4 @@ function createBlock(state, idx) {
 
   // Инициализация с дефолтным набором
   render([Object.assign(stateForSize(9), { O: 1 })]);
-});
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('order-submit');
-  if (!btn) return;
-
-  btn.addEventListener('click', () => {
-    // Сформируй объект конфигурации согласно текущему состоянию конфигуратора
-    const collectedConfig = {
-      O: currentState.O,
-      X: currentState.X,
-      K: currentState.K,
-      L: currentState.L,
-      M: currentState.M,
-      N: currentState.N
-    };
-
-    // Рассчитай цену
-    const calculatedPrice = currentState.O * prices[currentState.X];
-
-    cartModule.addToCart({
-      id: 'ptimilk',
-      config: collectedConfig,
-      price: calculatedPrice
-    });
-
-    alert('Товар добавлен в корзину');
-  });
 });

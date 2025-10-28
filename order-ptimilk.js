@@ -18,7 +18,6 @@ function createBlock(state, idx) {
   const sum = state.K + state.L + state.M + state.N;
   const need = state.X - sum;
 
-  // вычисляем опциональную подсказку
   let warn = '';
   if (need > 0) {
     warn = `<span class="order-warn">положите ещё ${need} конфет</span>`;
@@ -28,9 +27,10 @@ function createBlock(state, idx) {
 
   const el = document.createElement('div');
   el.className = 'order-block';
+
   el.innerHTML = `
     <div class="order-row order-top">
-      <span class="order-value" data-o>${state.O}</span> кор. на
+      <span class="order-value" data-o>${state.O}</span> коробок по
       <span class="order-value" data-x>${state.X}</span> конфет, состав:
       <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
     </div>
@@ -46,12 +46,10 @@ function createBlock(state, idx) {
     <div class="order-flavor-row">
       <img src="pistachio.jpg" class="order-flavor-img" alt="фисташка" /> фисташка <span class="order-value" data-n>${state.N}</span>
     </div>
-    <div class="order-row order-sum">Всего в наборе ${sum}${warn}</div>
+    <div class="order-row order-sum">${warn}</div>
   `;
   return el;
 }
-
-
 
   function stateForSize(size) {
     const vals = Object.assign({}, defaults[size]);

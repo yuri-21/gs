@@ -20,9 +20,9 @@ function createBlock(state, idx) {
 
   let warn = '';
   if (need > 0) {
-    warn = `<span class="order-warn">положите ещё ${need} конфет</span>`;
+    warn = `<span class="order-warn">добавьте еще ${need}</span>`;
   } else if (need < 0) {
-    warn = `<span class="order-warn">уберите ${-need} конфет</span>`;
+    warn = `<span class="order-warn">уберите ${-need}</span>`;
   }
 
   const el = document.createElement('div');

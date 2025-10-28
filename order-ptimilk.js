@@ -1,5 +1,3 @@
-// order-ptimilk.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const prices = {9: 790, 16: 1350};
   const defaults = {
@@ -12,44 +10,40 @@ document.addEventListener('DOMContentLoaded', () => {
     return (val || 0).toLocaleString('ru-RU') + ' ₽';
   }
 
+  function createBlock(state, idx) {
+    const sum = state.K + state.L + state.M + state.N;
+    const need = state.X - sum;
+    let warn = '';
+    if (need > 0) {
+      warn = `<span class="order-warn">положите ещё ${need} конфет</span>`;
+    } else if (need < 0) {
+      warn = `<span class="order-warn">уберите ${-need} конфет</span>`;
+    }
 
-
-function createBlock(state, idx) {
-  const sum = state.K + state.L + state.M + state.N;
-  const need = state.X - sum;
-
-  let warn = '';
-  if (need > 0) {
-    warn = `<span class="order-warn">Вы выбрали ${sum}, добавьте еще ${need}</span>`;
-  } else if (need < 0) {
-    warn = `<span class="order-warn">Вы выбрали ${sum}, уберите ${-need}</span>`;
+    const el = document.createElement('div');
+    el.className = 'order-block';
+    el.innerHTML = `
+      <div class="order-row order-top">
+        <span class="order-value" data-o>${state.O}</span> коробок по
+        <span class="order-value" data-x>${state.X}</span> конфет, состав:
+        <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
+      </div>
+      <div class="order-flavor-row">
+        <img src="cocoa.jpg" class="order-flavor-img" alt="какао" /> какао <span class="order-value" data-k>${state.K}</span>
+      </div>
+      <div class="order-flavor-row">
+        <img src="strawberry.jpg" class="order-flavor-img" alt="клубника" /> клубника <span class="order-value" data-l>${state.L}</span>
+      </div>
+      <div class="order-flavor-row">
+        <img src="coconut.jpg" class="order-flavor-img" alt="кокос" /> кокос <span class="order-value" data-m>${state.M}</span>
+      </div>
+      <div class="order-flavor-row">
+        <img src="pistachio.jpg" class="order-flavor-img" alt="фисташка" /> фисташка <span class="order-value" data-n>${state.N}</span>
+      </div>
+      <div class="order-row order-sum">${warn}</div>
+    `;
+    return el;
   }
-
-  const el = document.createElement('div');
-  el.className = 'order-block';
-
-  el.innerHTML = `
-    <div class="order-row order-top">
-      <span class="order-value" data-o>${state.O}</span> коробок по
-      <span class="order-value" data-x>${state.X}</span> конфет, состав:
-      <span class="order-action" data-remove style="display:${idx === 0 ? 'none' : 'inline'}; margin-left: 16px;">удалить набор</span>
-    </div>
-    <div class="order-flavor-row">
-      <img src="cocoa.jpg" class="order-flavor-img" alt="какао" /> какао <span class="order-value" data-k>${state.K}</span>
-    </div>
-    <div class="order-flavor-row">
-      <img src="strawberry.jpg" class="order-flavor-img" alt="клубника" /> клубника <span class="order-value" data-l>${state.L}</span>
-    </div>
-    <div class="order-flavor-row">
-      <img src="coconut.jpg" class="order-flavor-img" alt="кокос" /> кокос <span class="order-value" data-m>${state.M}</span>
-    </div>
-    <div class="order-flavor-row">
-      <img src="pistachio.jpg" class="order-flavor-img" alt="фисташка" /> фисташка <span class="order-value" data-n>${state.N}</span>
-    </div>
-    <div class="order-row order-sum">${warn}</div>
-  `;
-  return el;
-}
 
   function stateForSize(size) {
     const vals = Object.assign({}, defaults[size]);
@@ -76,56 +70,59 @@ function createBlock(state, idx) {
       };
     });
 
-    // новая отдельная строка "добавить набор"
+    // отдельная строка с кнопкой "добавить набор"
     const addRow = document.createElement('div');
     addRow.className = 'order-row';
     addRow.innerHTML = '<span class="order-action" data-add>добавить набор</span>';
-    root.append(addRow);
+    root.appendChild(addRow);
     addRow.querySelector('[data-add]').onclick = () => {
       blocks.push(stateForSize(9));
       render(blocks);
     };
 
-    // Итоговые значения
-    const totalBoxes = blocks.reduce((s, b) => s + b.O, 0);
-    const totalSum = blocks.reduce((s, b) => s + b.O * prices[b.X], 0);
+    // Итоги
+    let totalBoxes = blocks.reduce((s, b) => s + b.O, 0);
+    let totalSum = blocks.reduce((s, b) => s + b.O * prices[b.X], 0);
+
     const sumK = blocks.reduce((s, b) => s + b.K * b.O, 0);
     const sumL = blocks.reduce((s, b) => s + b.L * b.O, 0);
     const sumM = blocks.reduce((s, b) => s + b.M * b.O, 0);
     const sumN = blocks.reduce((s, b) => s + b.N * b.O, 0);
     const sumX = blocks.reduce((s, b) => s + b.X * b.O, 0);
 
-    // Отрисовка итогового блока
     const summary = document.createElement('div');
     summary.className = 'order-summary';
     summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
-    root.append(summary);
+    root.appendChild(summary);
 
-    // Проверка валидности заказа
+    // Валидация теперь по условию, если есть хоть один блок с несоответствием sum и state.X
     let warn = '';
-    if (sumK + sumL + sumM + sumN !== sumX) {
-      warn = 'не все наборы составлены';
-    } else if (sumK + sumL + sumM + sumN < 9) {
-      warn = 'минимальный заказ 9 конфет';
+    for (const b of blocks) {
+      const s = b.K + b.L + b.M + b.N;
+      if (b.X !== s) {
+        warn = 'не все наборы составлены';
+        break;
+      }
     }
 
     if (warn) {
       const warnBlock = document.createElement('div');
       warnBlock.className = 'order-warn';
       warnBlock.innerHTML = warn;
-      root.append(warnBlock);
+      root.appendChild(warnBlock);
+      document.getElementById('order-submit').disabled = true;
+    } else {
+      document.getElementById('order-submit').disabled = false;
     }
 
-    // Кнопка оформления заказа
+    // Кнопка оформления
     if (!root.querySelector('#order-submit')) {
       const submit = document.createElement('button');
       submit.id = 'order-submit';
       submit.type = 'button';
       submit.innerText = 'Оформить';
       submit.disabled = !!warn;
-      root.append(submit);
-    } else {
-      document.getElementById('order-submit').disabled = !!warn;
+      root.appendChild(submit);
     }
   }
 
@@ -146,7 +143,11 @@ function createBlock(state, idx) {
     input.select();
 
     input.onblur = () => finishInput();
-    input.onkeydown = e => { if (e.key === 'Enter') { input.blur(); } };
+    input.onkeydown = e => {
+      if (e.key === 'Enter') {
+        input.blur();
+      }
+    };
     function finishInput() {
       let v = parseInt(input.value, 10);
       if (isNaN(v) || v < minValue) v = minValue;
@@ -188,6 +189,6 @@ function createBlock(state, idx) {
     }
   }
 
-  // Инициализация с дефолтным набором
-  render([Object.assign(stateForSize(9), { O: 1 })]);
+  // Стартовая отрисовка
+  render([stateForSize(9)]);
 });

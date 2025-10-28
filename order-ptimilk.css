@@ -108,7 +108,9 @@
   font-weight: 700;
   color: #4e225b;
   font-size: 20px;
+  /*
   background: #fffbe6;
+  */
   border-radius: 6px;
   padding: 0 6px;
   border: none;
@@ -116,7 +118,6 @@
   display: inline-block;
   vertical-align: middle;
   letter-spacing: 1px;
-  
   display: flex;
   align-items: center;
 }

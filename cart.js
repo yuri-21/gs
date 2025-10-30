@@ -1,88 +1,77 @@
-const CART_KEY = 'my_shop_cart';
-
-function loadCart() {
-  const raw = localStorage.getItem(CART_KEY);
-  return raw ? JSON.parse(raw) : [];
-}
-
-function saveCart(cart) {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
-
-function renderCart() {
+// cart.js
+document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('cart-root');
-  const cart = loadCart();
+  const CART_KEY = 'gs_cart';
 
-  root.innerHTML = '';
-  if (cart.length === 0) {
-    root.innerHTML = `
-      <div class="cart-empty">
-        <p>Ваша корзина пуста</p>
-        <a href="/" class="btn-primary">Перейти к продуктам</a>
-      </div>`;
-    return;
+  function loadCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
   }
 
-  let totalSum = 0;
+  function saveCart(items) {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+  }
 
-  cart.forEach((product, i) => {
-    const price = product.price || 0;
-    totalSum += price;
+  function formatSum(val) {
+    return (val || 0).toLocaleString('ru-RU') + ' ₽';
+  }
 
-    const el = document.createElement('div');
-    el.className = 'cart-item';
+  function render() {
+    const items = loadCart();
+    root.innerHTML = '';
 
-    el.innerHTML = `
-      <h3>${product.id}</h3>
-      <pre>${JSON.stringify(product.config, null, 2)}</pre>
-      <p>Цена: ${price.toLocaleString('ru-RU')} ₽</p>
-      <button data-remove="${i}">Удалить</button>
-    `;
+    if (items.length === 0) {
+      root.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+      return;
+    }
 
-    el.querySelector(`[data-remove="${i}"]`).onclick = () => {
-      removeFromCart(i);
-    };
+    const list = document.createElement('div');
+    list.className = 'cart-list';
 
-    root.appendChild(el);
-  });
+    let total = 0;
+    items.forEach((item, i) => {
+      const sum = item.price * item.qty;
+      total += sum;
+      const el = document.createElement('div');
+      el.className = 'cart-item';
+      el.innerHTML = `
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-details">
+          <span>${item.qty} × ${formatSum(item.price)}</span>
+          <span class="cart-item-sum">${formatSum(sum)}</span>
+        </div>
+        <span class="cart-remove" data-rm="${i}">удалить</span>
+      `;
+      list.append(el);
+    });
+    root.append(list);
 
-  const sumEl = document.createElement('div');
-  sumEl.className = 'cart-total';
-  sumEl.innerText = `Итого: ${totalSum.toLocaleString('ru-RU')} ₽`;
-  root.appendChild(sumEl);
+    const totalEl = document.createElement('div');
+    totalEl.className = 'cart-total';
+    totalEl.innerHTML = `Итого: ${formatSum(total)}`;
+    root.append(totalEl);
 
-  const orderButton = document.createElement('button');
-  orderButton.className = 'btn-primary btn-full-width';
-  orderButton.innerText = 'Оформить заказ';
-  orderButton.onclick = () => {
-    checkout();
+    root.querySelectorAll('[data-rm]').forEach(btn => {
+      btn.onclick = e => {
+        const idx = +e.target.dataset.rm;
+        const items = loadCart();
+        items.splice(idx, 1);
+        saveCart(items);
+        render();
+      };
+    });
+  }
+
+  // Экспорт функции для добавления в корзину
+  window.Cart = {
+    add(item) {
+      const items = loadCart();
+      items.push(item);
+      saveCart(items);
+      alert('Товар добавлен в корзину!');
+      render();
+    },
+    render
   };
-  root.appendChild(orderButton);
-}
 
-function removeFromCart(index) {
-  const cart = loadCart();
-  cart.splice(index, 1);
-  saveCart(cart);
-  renderCart();
-}
-
-// Функция добавления товара из конфигуратора в корзину
-function addToCart(product) {
-  const cart = loadCart();
-  cart.push(product);
-  saveCart(cart);
-  alert('Товар добавлен в корзину');
-}
-
-// Функция оформления (заглушка)
-function checkout() {
-  alert('Функция оформления в разработке');
-}
-
-window.cartModule = {
-  addToCart,
-  renderCart
-};
-
-document.addEventListener('DOMContentLoaded', renderCart);
+  render();
+});

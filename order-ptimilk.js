@@ -191,3 +191,28 @@ function createBlock(state, idx) {
   // Инициализация с дефолтным набором
   render([Object.assign(stateForSize(9), { O: 1 })]);
 });
+
+
+// после добавления кнопки "Оформить"
+if (!root.querySelector('#order-add-to-cart')) {
+  const btnAdd = document.createElement('button');
+  btnAdd.id = 'order-add-to-cart';
+  btnAdd.type = 'button';
+  btnAdd.innerText = 'Добавить в корзину';
+  root.append(btnAdd);
+
+  btnAdd.onclick = () => {
+    const totalBoxes = blocks.reduce((s, b) => s + b.O, 0);
+    const totalSum = blocks.reduce((s, b) => s + b.O * prices[b.X], 0);
+    const item = {
+      name: 'Ptimilk набор',
+      qty: totalBoxes,
+      price: totalSum / totalBoxes, // средняя цена за коробку
+    };
+    if (window.Cart) {
+      window.Cart.add(item);
+    } else {
+      alert('Ошибка: модуль корзины не подключён');
+    }
+  };
+}

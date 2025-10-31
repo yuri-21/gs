@@ -115,9 +115,23 @@ document.addEventListener('DOMContentLoaded', () => {
   function render(blocks) {
     root.innerHTML = '<div class="order-blocks"></div>';
     const blocksWrap = root.querySelector('.order-blocks');
+
+
+	let hasWarn = false; // флаг наличия предупреждения в блоках. Добавлено
+
+
     blocks.forEach((state, idx) => {
       const el = createBlock(state, idx);
       blocksWrap.append(el);
+
+
+	if (el.querySelector('.order-warn')) { // Добавлено
+		hasWarn = true; // Добавлено
+		} // Добавлено
+	
+	
+
+
 
       el.querySelector('[data-o]').onclick = () => showInput(el, 'O', blocks, idx, 1);
       el.querySelector('[data-x]').onclick = () => showSelect(el, 'X', [9, 16], blocks, idx);
@@ -153,16 +167,33 @@ document.addEventListener('DOMContentLoaded', () => {
     summary.innerHTML = `Всего коробок ${totalBoxes} на сумму ${formatSum(totalSum)}`;
     root.append(summary);
 
-    let warn = '';
-    if (sumK + sumL + sumM + sumN !== sumX) {
-      warn = 'не все наборы составлены';
+	
+	
+	if (hasWarn) {
+		const warnBlock = document.createElement('div');
+		warnBlock.className = 'order-warn';
+		warnBlock.innerText = 'Внимание: есть блоки с незавершенным составом!';
+		root.append(warnBlock);
 
-    if (warn) {
-      const warnBlock = document.createElement('div');
-      warnBlock.className = 'order-warn';
-      warnBlock.innerHTML = warn;
-      root.append(warnBlock);
-    }
+		const orderBtn = document.getElementById('order-submit');
+	if (orderBtn) orderBtn.disabled = true;
+	}
+	else {
+		const orderBtn = document.getElementById('order-submit');
+	if (orderBtn) orderBtn.disabled = false;
+	}
+
+
+//    let warn = '';
+//    if (sumK + sumL + sumM + sumN !== sumX) {
+//      warn = 'не все наборы составлены';
+//
+//    if (warn) {
+//      const warnBlock = document.createElement('div');
+//      warnBlock.className = 'order-warn';
+//      warnBlock.innerHTML = warn;
+//      root.append(warnBlock);
+//    }
 
   // стартовое состояние
   render([Object.assign(stateForSize(9), { O: 1 })]);

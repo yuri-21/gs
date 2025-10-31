@@ -2,4 +2,6 @@
 
 <div id="order-ptimilk-root"></div>
 
+<?php include 'cart.php'; ?>
+
 <script src="order-ptimilk.js"></script>

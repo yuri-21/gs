@@ -196,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (orderButton) orderButton.disabled = false;
     }
   }
-
   // Инициализация с одним набором по умолчанию
   render([Object.assign(createInitialSet(9), { boxCount: 1 })]);
 });

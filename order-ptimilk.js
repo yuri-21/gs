@@ -164,32 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
       root.append(warnBlock);
     }
 
-    // Кнопка добавления в корзину
-    if (!root.querySelector('#order-add-to-cart')) {
-      const btnAdd = document.createElement('button');
-      btnAdd.id = 'order-add-to-cart';
-      btnAdd.type = 'button';
-      btnAdd.innerText = 'Добавить в корзину';
-      btnAdd.disabled = !!warn;
-      root.append(btnAdd);
-
-      btnAdd.onclick = () => {
-        const item = {
-          name: 'Ptimilk набор',
-          qty: totalBoxes,
-          price: Math.round(totalSum / Math.max(totalBoxes, 1))
-        };
-        if (window.Cart) {
-          window.Cart.add(item);
-        } else {
-          alert('Ошибка: модуль корзины не подключён');
-        }
-      };
-    } else {
-      document.getElementById('order-add-to-cart').disabled = !!warn;
-    }
-  }
-
   // стартовое состояние
   render([Object.assign(stateForSize(9), { O: 1 })]);
 });

@@ -2,7 +2,6 @@
 
 <div id="order-ptimilk-root"></div>
 
-<!-- подключаем корзину -->
-<?php include 'cart.php'; ?>
+<!-- подключаем корзину <?php include 'cart.php'; ?> -->
 
 <script src="order-ptimilk.js"></script>

@@ -156,9 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let warn = '';
     if (sumK + sumL + sumM + sumN !== sumX) {
       warn = 'не все наборы составлены';
-    } else if (sumK + sumL + sumM + sumN < 9) {
-      warn = 'минимальный заказ 9 конфет';
-    }
 
     if (warn) {
       const warnBlock = document.createElement('div');
